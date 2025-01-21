@@ -18,7 +18,7 @@ Este proyecto es una plataforma de e-commerce diseñada con las mejores práctic
 - **Spring Boot 3.x**
 - **Maven** como gestor de dependencias.
 - **GraphQL** (usando `graphql-java` o la implementación de Spring Boot).
-- **MySQL** o **PostgreSQL** como base de datos relacional.
+- **PostgreSQL** como base de datos relacional.
 - **Hibernate** para mapeo ORM.
 - **Docker** para contenerización.
 - **Swagger** para documentar las APIs REST.
@@ -43,54 +43,6 @@ El sistema utiliza los principios de Domain-Driven Design (DDD):
 |        Dominio       |
 +----------------------+
 ```
-
-## Historias de Usuario
-
-### MVP (Producto Mínimo Viable)
-
-Estas historias están priorizadas para construir un sistema funcional básico:
-
-#### Gestión de Usuarios
-
-- Como administrador, quiero registrar nuevos usuarios para que puedan iniciar sesión en la plataforma.
-- Como cliente, quiero registrarme y acceder a mi cuenta para realizar compras.
-
-#### Gestión de Productos
-
-- Como administrador, quiero agregar, actualizar y eliminar productos para mantener el catálogo actualizado.
-- Como cliente, quiero buscar productos por nombre o categoría para encontrar lo que necesito.
-
-#### Carrito de Compras
-
-- Como cliente, quiero agregar productos a mi carrito para prepararme para la compra.
-- Como cliente, quiero eliminar productos del carrito si cambio de opinión.
-
-#### Gestión de Pedidos
-
-- Como cliente, quiero confirmar mi pedido desde el carrito para completar mi compra.
-- Como administrador, quiero ver una lista de pedidos para gestionarlos y actualizarlos.
-
-#### Categorías de Productos
-
-- Como administrador, quiero gestionar categorías de productos para clasificar mejor los artículos.
-
-#### Consultas Avanzadas (GraphQL)
-
-- Como cliente, quiero obtener productos filtrados por precio, popularidad y categorías para refinar mi búsqueda.
-
-### Fase 2: Funcionalidades Avanzadas
-
-#### Procesamiento de Pagos
-
-- Como cliente, quiero pagar mis pedidos utilizando métodos seguros (ejemplo: tarjeta de crédito, PayPal).
-
-#### Roles y Permisos
-
-- Como administrador, quiero gestionar roles y permisos para controlar el acceso a ciertas funcionalidades.
-
-#### Historial de Pedidos
-
-- Como cliente, quiero ver mi historial de pedidos para realizar un seguimiento de mis compras.
 
 ## Estructura del Proyecto
 
@@ -125,7 +77,7 @@ src/
 1. Clona este repositorio:
 
 ```bash
-git clone https://github.com/tuusuario/ecommerce-ddd.git
+git clone https://github.com/V11Playko/E-Commerce-with-API-REST-and-GraphQL
 cd ecommerce-ddd
 ```
 
