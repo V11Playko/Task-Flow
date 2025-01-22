@@ -1,16 +1,74 @@
-# Getting Started
+## Estructura del Proyecto
 
-### Reference Documentation
-For further reference, please consider the following sections:
-
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/3.4.1/maven-plugin)
-* [Create an OCI image](https://docs.spring.io/spring-boot/3.4.1/maven-plugin/build-image.html)
-
-### Maven Parent overrides
-
-Due to Maven's design, elements are inherited from the parent POM to the project POM.
-While most of the inheritance is fine, it also inherits unwanted elements like `<license>` and `<developers>` from the parent.
-To prevent this, the project POM contains empty overrides for these elements.
-If you manually switch to a different parent and actually want the inheritance, you need to remove those overrides.
-
+Estructura del proyecto más definida:
+```
+projectManagement/
+├── HELP.md
+├── HUs.md
+├── LICENSE
+├── README.md
+├── pom.xml
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/
+│   │   │       └── playko/
+│   │   │           └── eCommerce/
+│   │   │               ├── application/
+│   │   │               │   ├── dto/
+│   │   │               │   │   ├── request/
+│   │   │               │   │   └── response/
+│   │   │               │   ├── handler/
+│   │   │               │   │   └── impl/
+│   │   │               │   ├── mapper/
+│   │   │               │   │   ├── request/
+│   │   │               │   │   └── response/
+│   │   │               │   └── service/
+│   │   │               ├── domain/
+│   │   │               │   ├── api/
+│   │   │               │   ├── exception/
+│   │   │               │   ├── model/
+│   │   │               │   ├── spi/
+│   │   │               │   └── usecase/
+│   │   │               ├── infrastructure/
+│   │   │               │   ├── configuration/
+│   │   │               │   │   ├── security/
+│   │   │               │   │   │   ├── exception/
+│   │   │               │   │   │   ├── userDetails/
+│   │   │               │   │   │   └── jwt/
+│   │   │               │   │   └── general/
+│   │   │               │   ├── documentation/
+│   │   │               │   │   ├── api/
+│   │   │               │   │   └── graphql/
+│   │   │               │   ├── exceptionhandler/
+│   │   │               │   ├── input/
+│   │   │               │   │   ├── rest/
+│   │   │               │   │   └── graphql/
+│   │   │               │   ├── out/
+│   │   │               │   │   ├── jpa/
+│   │   │               │   │   │   ├── adapter/
+│   │   │               │   │   │   ├── entity/
+│   │   │               │   │   │   ├── mapper/
+│   │   │               │   │   │   └── repository/
+│   │   │               │   │   ├── notification/
+│   │   │               │   │   │   └── email/
+│   │   │               │   │   └── external/
+│   │   │               │   │       └── calendar/
+│   │   │               │   └── templates/
+│   │   └── resources/
+│   │       ├── application.properties
+│   │       ├── db/
+│   │       │   └── migrations/
+│   │       └── static/
+│   └── test/
+│       ├── java/
+│       │   └── com/
+│       │       └── playko/
+│       │           └── eCommerce/
+│       │               ├── application/
+│       │               ├── domain/
+│       │               └── infrastructure/
+│       └── resources/
+└── mvnw
+└── mvnw.cmd
+```
