@@ -1,9 +1,9 @@
 # Historias de Usuario
 
 ## Gestión de Usuarios
-- **HU01**: Como usuario, quiero registrarme en el sistema para acceder a mis proyectos.
-- **HU02**: Como usuario, quiero iniciar sesión en el sistema para gestionar mis proyectos.
-- **HU03**: Como usuario, quiero recuperar mi contraseña en caso de olvidarla.
+- **HU01**: Como usuario, quiero que haya seguridad donde me voy a registrar.
+- **HU02**: Como usuario, quiero registrarme en el sistema para acceder a mis proyectos.
+- **HU03**: Como usuario, quiero iniciar sesión en el sistema para gestionar mis proyectos.
 - **HU04**: Como usuario, quiero editar mi perfil para actualizar mi información personal.
 - **HU05**: Como manager, quiero invitar a otros usuarios al sistema para que se unan a mi equipo.
 - **HU06**: Como manager, quiero desactivar usuarios de mi equipo para revocarles el acceso.
