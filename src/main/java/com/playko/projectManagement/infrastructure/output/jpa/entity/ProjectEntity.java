@@ -7,6 +7,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "project")
@@ -40,4 +42,9 @@ public class ProjectEntity {
 
     private String owner;
 
+    @OneToMany(mappedBy = "project")
+    private List<BoardEntity> boards;
+
+    @OneToMany(mappedBy = "project")
+    private List<TaskEntity> tasks;
 }
