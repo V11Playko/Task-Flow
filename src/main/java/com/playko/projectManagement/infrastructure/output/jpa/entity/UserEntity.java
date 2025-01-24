@@ -38,6 +38,11 @@ public class UserEntity {
 
     private String password;
 
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
     private RoleEntity roleEntity;
 
+    @ManyToOne
+    @JoinColumn(name = "team_id", nullable = false)
+    private TeamEntity team;
 }

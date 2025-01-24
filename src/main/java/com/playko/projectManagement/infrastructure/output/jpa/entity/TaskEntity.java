@@ -8,6 +8,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "task")
@@ -29,6 +33,7 @@ public class TaskEntity {
     private Long id;
     private String title;
     private String description;
+
     @Enumerated(EnumType.STRING)
     private TaskState state;
 
@@ -36,5 +41,15 @@ public class TaskEntity {
     private TaskPriority priority;
 
     private LocalDate limitDate;
-    private String projectAssociate;
+
+    @ManyToOne
+    @JoinColumn(name = "project_id", nullable = false)
+    private ProjectEntity project;
+
+    @ManyToOne
+    @JoinColumn(name = "board_column_id", nullable = false)
+    private BoardColumnEntity boardColumn;
+
+    @OneToMany(mappedBy = "task")
+    private List<SubTaskEntity> subtasks;
 }

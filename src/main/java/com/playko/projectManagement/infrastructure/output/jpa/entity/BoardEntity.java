@@ -29,8 +29,11 @@ public class BoardEntity {
 
     private String name;
 
+    @OneToMany(mappedBy = "board")
     private List<BoardColumnEntity> columns;
 
+    @ManyToOne
+    @JoinColumn(name = "project_id", nullable = false)
     private ProjectEntity project;
 }
 
