@@ -39,4 +39,9 @@ public class UserUseCase implements IUserServicePort {
 
         userPersistencePort.saveUser(userModel);
     }
+
+    @Override
+    public void updateUser(Long id, UserModel userModel) {
+        userPersistencePort.updateUser(id, userModel);
+    }
 }

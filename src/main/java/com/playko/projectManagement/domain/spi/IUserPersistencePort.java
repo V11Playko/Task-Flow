@@ -8,4 +8,5 @@ public interface IUserPersistencePort {
     UserModel findByEmail(String email);
     List<UserModel> findAllUsers();
     void saveUser(UserModel userModel);
+    void updateUser(Long id, UserModel userModel);
 }
