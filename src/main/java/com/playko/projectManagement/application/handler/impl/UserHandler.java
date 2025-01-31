@@ -1,6 +1,7 @@
 package com.playko.projectManagement.application.handler.impl;
 
 import com.playko.projectManagement.application.dto.request.UserRequestDto;
+import com.playko.projectManagement.application.dto.request.UserUpdateRequestDto;
 import com.playko.projectManagement.application.dto.response.UserResponseDto;
 import com.playko.projectManagement.application.handler.IUserHandler;
 import com.playko.projectManagement.application.mapper.request.IUserRequestMapper;
@@ -37,4 +38,19 @@ public class UserHandler implements IUserHandler {
         UserModel userModel = userRequestMapper.toUserRequest(userRequestDto);
         userServicePort.saveUser(userModel);
     }
+
+    @Override
+    public void updateUser(Long id, UserUpdateRequestDto userUpdateRequestDto) {
+        UserModel existingUser = userServicePort.findByEmail(userUpdateRequestDto.getEmail());
+
+        existingUser.setName(userUpdateRequestDto.getName());
+        existingUser.setSurname(userUpdateRequestDto.getSurname());
+        existingUser.setDniNumber(userUpdateRequestDto.getDniNumber());
+        existingUser.setPhone(userUpdateRequestDto.getPhone());
+        existingUser.setEmail(userUpdateRequestDto.getEmail());
+        existingUser.setPassword(userUpdateRequestDto.getPassword()); // Considera encriptarla antes de guardarla
+
+        userServicePort.updateUser(id,existingUser);
+    }
+
 }
