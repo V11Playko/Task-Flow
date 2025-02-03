@@ -38,4 +38,9 @@ public class UserJpaAdapter implements IUserPersistencePort {
     public void updateUser(Long id, UserModel userModel) {
         userRepository.save(userEntityMapper.toEntity(userModel));
     }
+
+    @Override
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
 }
