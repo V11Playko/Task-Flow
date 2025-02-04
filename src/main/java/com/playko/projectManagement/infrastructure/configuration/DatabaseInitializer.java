@@ -50,6 +50,7 @@ public class DatabaseInitializer {
             admin.setName("Admin");
             admin.setSurname("AdminSurname");
             admin.setPhone("+57 3136824595");
+            admin.setDniNumber("10093875126");
             admin.setEmail("edu.ufps10@gmail.com");
             admin.setPassword(passwordEncoder.encodePassword("admin"));
 
