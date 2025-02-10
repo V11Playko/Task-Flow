@@ -36,6 +36,7 @@ public class UserRestController {
     })
     @PostMapping("/saveUser")
     public ResponseEntity<Void> saveUser(@Valid @RequestBody UserRequestDto userRequestDto){
+        userRequestDto.setNameRole("ROLE_USER");
         userHandler.saveUser(userRequestDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
