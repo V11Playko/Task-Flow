@@ -30,7 +30,7 @@ public class DatabaseInitializer {
         createRoleIfNotExists("ROLE_ADMIN", "ROLE_ADMIN");
         createRoleIfNotExists("ROLE_CONTRIBUIDOR", "ROLE_CONTRIBUIDOR");
         createRoleIfNotExists("ROLE_MANAGER", "ROLE_MANAGER");
-        createRoleIfNotExists("ROLE_OBSERVADOR", "ROLE_OBSERVADOR");
+        createRoleIfNotExists("ROLE_OBSERVER", "ROLE_OBSERVER");
         createRoleIfNotExists("ROLE_USER", "ROLE_USER");
     }
 
