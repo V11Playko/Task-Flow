@@ -1,7 +1,8 @@
 package com.playko.projectManagement.infrastructure.input.rest;
 
 import com.playko.projectManagement.application.dto.request.ProjectRequestDto;
-import com.playko.projectManagement.application.handler.IProjectHandler;
+import com.playko.projectManagement.application.dto.request.TaskRequestDto;
+import com.playko.projectManagement.application.handler.ITaskHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -17,20 +18,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/project")
+@RequestMapping("/api/v1/task")
 @RequiredArgsConstructor
-public class ProjectRestController {
-    private final IProjectHandler projectHandler;
+public class TaskRestController {
+    private final ITaskHandler taskHandler;
 
-    @Operation(summary = "Create a new Project")
+    @Operation(summary = "Save a new task")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Project created", content = @Content),
+            @ApiResponse(responseCode = "201", description = "task created", content = @Content),
             @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content)
     })
-    @PostMapping("/createProject")
-    @PreAuthorize("hasAnyRole('MANAGER', 'USER')")
-    public ResponseEntity<Void> createProject(@Valid @RequestBody ProjectRequestDto projectRequestDto) {
-        projectHandler.createProject(projectRequestDto);
+    @PostMapping("/saveTask")
+    @PreAuthorize("hasRole('MANAGER')")
+    public ResponseEntity<Void> saveTask(@Valid @RequestBody TaskRequestDto taskRequestDto) {
+        taskHandler.saveTask(taskRequestDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
 }
