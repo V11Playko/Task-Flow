@@ -1,6 +1,7 @@
 package com.playko.projectManagement.infrastructure.input.rest;
 
 import com.playko.projectManagement.application.dto.request.ProjectRequestDto;
+import com.playko.projectManagement.application.dto.request.TaskAssignmentRequestDto;
 import com.playko.projectManagement.application.dto.request.TaskRequestDto;
 import com.playko.projectManagement.application.handler.ITaskHandler;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,4 +36,16 @@ public class TaskRestController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Assign a task to a user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Task assigned successfully"),
+            @ApiResponse(responseCode = "404", description = "Task or User not found"),
+            @ApiResponse(responseCode = "403", description = "User is not authorized")
+    })
+    @PreAuthorize("hasRole('MANAGER')")
+    @PostMapping("/assignTask")
+    public ResponseEntity<Void> assignTaskToUser(@Valid @RequestBody TaskAssignmentRequestDto request) {
+        taskHandler.assignTaskToUser(request);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
