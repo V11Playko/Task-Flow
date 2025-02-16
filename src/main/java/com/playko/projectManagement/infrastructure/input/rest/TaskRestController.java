@@ -1,9 +1,8 @@
 package com.playko.projectManagement.infrastructure.input.rest;
 
-import com.playko.projectManagement.application.dto.request.ProjectRequestDto;
-import com.playko.projectManagement.application.dto.request.TaskAssignmentRequestDto;
-import com.playko.projectManagement.application.dto.request.TaskReassignmentRequestDto;
-import com.playko.projectManagement.application.dto.request.TaskRequestDto;
+import com.playko.projectManagement.application.dto.request.task.TaskAssignmentRequestDto;
+import com.playko.projectManagement.application.dto.request.task.TaskReassignmentRequestDto;
+import com.playko.projectManagement.application.dto.request.task.TaskRequestDto;
 import com.playko.projectManagement.application.handler.ITaskHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

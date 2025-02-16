@@ -1,8 +1,8 @@
 package com.playko.projectManagement.application.handler.impl;
 
-import com.playko.projectManagement.application.dto.request.TaskAssignmentRequestDto;
-import com.playko.projectManagement.application.dto.request.TaskReassignmentRequestDto;
-import com.playko.projectManagement.application.dto.request.TaskRequestDto;
+import com.playko.projectManagement.application.dto.request.task.TaskAssignmentRequestDto;
+import com.playko.projectManagement.application.dto.request.task.TaskReassignmentRequestDto;
+import com.playko.projectManagement.application.dto.request.task.TaskRequestDto;
 import com.playko.projectManagement.application.handler.ITaskHandler;
 import com.playko.projectManagement.application.mapper.request.ITaskRequestMapper;
 import com.playko.projectManagement.domain.api.ITaskServicePort;
