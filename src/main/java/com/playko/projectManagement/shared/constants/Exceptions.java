@@ -21,6 +21,7 @@ public class Exceptions {
     /**
      * Mensajes para los correos
      */
+    public static final String AFFAIR_NEW_TASK_ASSIGNMENT = "Se te ha asignado una nueva tarea";
 
 
     /**
