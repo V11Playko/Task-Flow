@@ -19,6 +19,11 @@ public class Exceptions {
     public static final String RESPONSE_MESSAGE_KEY = "Mensaje";
 
     /**
+     * Mensajes para los correos
+     */
+
+
+    /**
      * Mensajes de excepciones
      */
     public static final String UNAUTHORIZED_MESSAGE = "No tienes permiso para acceder a este recurso.";
@@ -33,5 +38,6 @@ public class Exceptions {
     public static final String TASK_NOT_FOUND_MESSAGE = "Esta tarea no existe.";
     public static final String INVALID_PROJECT_STATE_MESSAGE = "Sólo se pueden archivar los proyectos finalizados.";
     public static final String SUB_TASK_NOT_FOUND_MESSAGE= "Subtarea no encontrada.";
+    public static final String EMAIL_NOT_SEND_MESSAGE= "El correo no se envio correctamente..";
 
 }
