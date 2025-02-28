@@ -21,11 +21,13 @@ import com.playko.projectManagement.infrastructure.output.jpa.repository.IUserRe
 import com.playko.projectManagement.shared.constants.Exceptions;
 import com.playko.projectManagement.shared.enums.TaskState;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.config.Task;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -109,6 +111,23 @@ public class TaskJpaAdapter implements ITaskPersistencePort {
                 .orElseThrow(TaskNotFoundException::new);
         taskEntity.setState(newState);
         taskRepository.save(taskEntity);
+    }
+
+    @Scheduled(cron = "0 0 8 * * ?") // Se ejecuta todos los días a las 8 AM
+    public void sendTaskReminders() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime tomorrow = now.plusDays(1);
+
+        List<TaskEntity> tasks = taskRepository.findTasksDueSoon(now, tomorrow);
+        for (TaskEntity task : tasks) {
+            if (task.getAssignedUser() != null) {
+                EmailRequestDto emailRequestDto = new EmailRequestDto();
+                emailRequestDto.setDestinatario(task.getAssignedUser().getEmail());
+                emailRequestDto.setAsunto("Recordatorio: Tarea próxima a vencer");
+                emailRequestDto.setMensaje("La tarea '" + task.getTitle() + "' vence el " + task.getLimitDate() + ".");
+                emailHandler.sendEmail(emailRequestDto);
+            }
+        }
     }
 
     public String obtenerCorreoDelToken() {
