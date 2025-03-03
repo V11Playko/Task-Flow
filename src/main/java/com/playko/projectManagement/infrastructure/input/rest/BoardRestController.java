@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -30,6 +31,7 @@ public class BoardRestController {
             @ApiResponse(responseCode = "404", description = "Board not found")
     })
     @GetMapping("/{boardId}")
+    @PreAuthorize("hasAnyRole('MANAGER', 'USER')")
     public ResponseEntity<BoardResponseDto> getBoardById(@PathVariable Long boardId) {
         BoardResponseDto board = boardHandler.getBoardById(boardId);
         return ResponseEntity.ok(board);
@@ -41,6 +43,7 @@ public class BoardRestController {
             @ApiResponse(responseCode = "404", description = "Task or Column not found")
     })
     @PutMapping("/tasks/move")
+    @PreAuthorize("hasAnyRole('MANAGER', 'USER')")
     public ResponseEntity<Void> moveTask(@RequestParam Long taskId, @RequestParam Long targetColumnId) {
         boardHandler.moveTask(taskId, targetColumnId);
         return ResponseEntity.ok().build();
