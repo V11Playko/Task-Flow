@@ -10,5 +10,5 @@ public interface IProjectServicePort {
     void updateProjectDeadline(Long projectId, LocalDate deadline);
     void archiveProject(Long projectId);
     ProjectStatsDto getProjectStats(Long projectId);
-
+    void restrictUserFromProject(Long projectId, String email);
 }
