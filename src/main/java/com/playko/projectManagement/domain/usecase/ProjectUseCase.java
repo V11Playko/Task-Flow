@@ -36,4 +36,9 @@ public class ProjectUseCase implements IProjectServicePort {
     public ProjectStatsDto getProjectStats(Long projectId) {
         return projectPersistencePort.getProjectStats(projectId);
     }
+
+    @Override
+    public void restrictUserFromProject(Long projectId, String email) {
+        projectPersistencePort.restrictUserFromProject(projectId, email);
+    }
 }
