@@ -42,5 +42,6 @@ public class Exceptions {
     public static final String EMAIL_NOT_SEND_MESSAGE= "El correo no se envio correctamente..";
     public static final String BOARD_NOT_FOUND_MESSAGE = "Esta tabla Kanban no existe.";
     public static final String INVALID_TASK_STATE_MESSAGE = "La tarea aún no ha sido completada.";
+    public static final String USER_ALREADY_RESTRICTED_MESSAGE = "El usuario ya esta restringido.";
 
 }

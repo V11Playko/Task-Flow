@@ -13,6 +13,7 @@ import com.playko.projectManagement.infrastructure.exception.TaskNotFoundExcepti
 import com.playko.projectManagement.infrastructure.exception.TeamNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.UnauthorizedException;
 import com.playko.projectManagement.infrastructure.exception.UserAlreadyExistsException;
+import com.playko.projectManagement.infrastructure.exception.UserAlreadyRestrictedException;
 import com.playko.projectManagement.infrastructure.exception.UserNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.UserNotInTeamException;
 import jakarta.validation.ConstraintViolation;
@@ -44,6 +45,7 @@ import static com.playko.projectManagement.shared.constants.Exceptions.TEAM_NOT_
 import static com.playko.projectManagement.shared.constants.Exceptions.UNAUTHORIZED_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.USERS_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.USER_ALREADY_EXISTS_MESSAGE;
+import static com.playko.projectManagement.shared.constants.Exceptions.USER_ALREADY_RESTRICTED_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.USER_NOT_FOUND_IN_TEAM_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.USER_NOT_FOUND_MESSAGE;
 
@@ -176,11 +178,17 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, BOARD_NOT_FOUND_MESSAGE));
     }
-
     @ExceptionHandler(InvalidTaskStateException.class)
     public ResponseEntity<Map<String, String>> invalidTaskStateException(
             InvalidTaskStateException invalidTaskStateException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, INVALID_TASK_STATE_MESSAGE));
+    }
+
+    @ExceptionHandler(UserAlreadyRestrictedException.class)
+    public ResponseEntity<Map<String, String>> userAlreadyRestrictedException(
+            UserAlreadyRestrictedException userAlreadyRestrictedException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, USER_ALREADY_RESTRICTED_MESSAGE));
     }
 }
