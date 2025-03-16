@@ -7,6 +7,7 @@ import com.playko.projectManagement.domain.model.ProjectModel;
 import com.playko.projectManagement.domain.spi.IProjectPersistencePort;
 import com.playko.projectManagement.infrastructure.exception.InvalidProjectStateException;
 import com.playko.projectManagement.infrastructure.exception.ProjectNotFoundException;
+import com.playko.projectManagement.infrastructure.exception.UserAlreadyRestrictedException;
 import com.playko.projectManagement.infrastructure.exception.UserNotFoundException;
 import com.playko.projectManagement.infrastructure.output.jpa.entity.ProjectEntity;
 import com.playko.projectManagement.infrastructure.output.jpa.entity.RoleEntity;
@@ -107,5 +108,18 @@ public class ProjectJpaAdapter implements IProjectPersistencePort {
                 taskCounts.getOrDefault(TaskState.IN_PROGRESS, 0L).intValue(),
                 taskCounts.getOrDefault(TaskState.PENDING, 0L).intValue()
         );
+    }
+
+    @Override
+    public void restrictUserFromProject(Long projectId, String email) {
+        ProjectEntity project = projectRepository.findById(projectId)
+                .orElseThrow(ProjectNotFoundException::new);
+
+        if (!project.getRestrictedUsers().contains(email)) {
+            project.getRestrictedUsers().add(email);
+            projectRepository.save(project);
+        } else {
+            throw new UserAlreadyRestrictedException();
+        }
     }
 }
