@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -84,5 +85,12 @@ public class ProjectRestController {
     public ResponseEntity<ProjectStatsDto> getProjectProgress(@PathVariable Long projectId) {
         ProjectStatsDto stats = projectHandler.getProjectStats(projectId);
         return ResponseEntity.ok(stats);
+    }
+
+    @PreAuthorize("hasRole('MANAGER')")
+    @PostMapping("/restrict/{projectId}")
+    public ResponseEntity<String> restrictUser(@PathVariable Long projectId, @RequestParam String email) {
+        projectHandler.restrictUserFromProject(projectId, email);
+        return ResponseEntity.ok("Usuario restringido correctamente.");
     }
 }
