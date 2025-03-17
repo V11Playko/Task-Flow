@@ -11,4 +11,5 @@ public interface IProjectServicePort {
     void archiveProject(Long projectId);
     ProjectStatsDto getProjectStats(Long projectId);
     void restrictUserFromProject(Long projectId, String email);
+    void removeUserRestriction(Long projectId, String email);
 }
