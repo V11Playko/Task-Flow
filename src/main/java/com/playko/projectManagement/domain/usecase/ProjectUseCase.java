@@ -41,4 +41,9 @@ public class ProjectUseCase implements IProjectServicePort {
     public void restrictUserFromProject(Long projectId, String email) {
         projectPersistencePort.restrictUserFromProject(projectId, email);
     }
+
+    @Override
+    public void removeUserRestriction(Long projectId, String email) {
+        projectPersistencePort.removeUserRestriction(projectId, email);
+    }
 }
