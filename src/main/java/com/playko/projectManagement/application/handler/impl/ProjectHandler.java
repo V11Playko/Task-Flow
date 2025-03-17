@@ -43,4 +43,9 @@ public class ProjectHandler implements IProjectHandler {
     public void restrictUserFromProject(Long projectId, String email) {
         projectServicePort.restrictUserFromProject(projectId, email);
     }
+
+    @Override
+    public void removeUserRestriction(Long projectId, String email) {
+        projectServicePort.removeUserRestriction(projectId, email);
+    }
 }
