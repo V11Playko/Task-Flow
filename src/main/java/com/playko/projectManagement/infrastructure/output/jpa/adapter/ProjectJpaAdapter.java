@@ -17,6 +17,7 @@ import com.playko.projectManagement.infrastructure.output.jpa.mapper.IProjectEnt
 import com.playko.projectManagement.infrastructure.output.jpa.repository.IProjectRepository;
 import com.playko.projectManagement.infrastructure.output.jpa.repository.IRoleRepository;
 import com.playko.projectManagement.infrastructure.output.jpa.repository.IUserRepository;
+import com.playko.projectManagement.shared.SecurityUtils;
 import com.playko.projectManagement.shared.constants.Exceptions;
 import com.playko.projectManagement.shared.constants.RolesId;
 import com.playko.projectManagement.shared.enums.ProjectState;
@@ -34,6 +35,7 @@ public class ProjectJpaAdapter implements IProjectPersistencePort {
     private final IUserRepository userRepository;
     private final IRoleRepository roleRepository;
     private final IEmailHandler emailHandler;
+    private final SecurityUtils securityUtils;
 
     @Override
     public void createProject(ProjectModel projectModel) {
@@ -52,6 +54,9 @@ public class ProjectJpaAdapter implements IProjectPersistencePort {
 
     @Override
     public void updateProjectDeadline(Long projectId, LocalDate deadline) {
+        String correoAutenticado = securityUtils.obtenerCorreoDelToken();
+        securityUtils.validarAccesoProyecto(projectId, correoAutenticado);
+
         ProjectEntity project = projectRepository.findById(projectId)
                 .orElseThrow(ProjectNotFoundException::new);
         project.setFinishedDate(deadline);
@@ -69,6 +74,9 @@ public class ProjectJpaAdapter implements IProjectPersistencePort {
 
     @Override
     public void archiveProject(Long projectId) {
+        String correoAutenticado = securityUtils.obtenerCorreoDelToken();
+        securityUtils.validarAccesoProyecto(projectId, correoAutenticado);
+
         ProjectEntity project = projectRepository.findById(projectId)
                 .orElseThrow(ProjectNotFoundException::new);
         if (!project.getState().equals(ProjectState.COMPLETED)) {
@@ -88,6 +96,9 @@ public class ProjectJpaAdapter implements IProjectPersistencePort {
 
     @Override
     public ProjectStatsDto getProjectStats(Long projectId) {
+        String correoAutenticado = securityUtils.obtenerCorreoDelToken();
+        securityUtils.validarAccesoProyecto(projectId, correoAutenticado);
+
         ProjectEntity projectEntity = projectRepository.findById(projectId)
                 .orElseThrow(ProjectNotFoundException::new);
         ProjectModel project = projectEntityMapper.toModel(projectEntity);
@@ -113,6 +124,9 @@ public class ProjectJpaAdapter implements IProjectPersistencePort {
 
     @Override
     public void restrictUserFromProject(Long projectId, String email) {
+        String correoAutenticado = securityUtils.obtenerCorreoDelToken();
+        securityUtils.validarAccesoProyecto(projectId, correoAutenticado);
+
         ProjectEntity project = projectRepository.findById(projectId)
                 .orElseThrow(ProjectNotFoundException::new);
 
@@ -126,6 +140,9 @@ public class ProjectJpaAdapter implements IProjectPersistencePort {
 
     @Override
     public void removeUserRestriction(Long projectId, String email) {
+        String correoAutenticado = securityUtils.obtenerCorreoDelToken();
+        securityUtils.validarAccesoProyecto(projectId, correoAutenticado);
+
         ProjectEntity project = projectRepository.findById(projectId)
                 .orElseThrow(ProjectNotFoundException::new);
 
