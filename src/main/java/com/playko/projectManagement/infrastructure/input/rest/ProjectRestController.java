@@ -74,19 +74,13 @@ public class ProjectRestController {
             @ApiResponse(responseCode = "404", description = "Stats not found"),
             @ApiResponse(responseCode = "403", description = "User not authorized")
     })
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('OBSERVER', 'USER')")
     @GetMapping("/stats/{projectId}")
     public ResponseEntity<ProjectStatsDto> getProjectStats(@PathVariable Long projectId) {
         ProjectStatsDto stats = projectHandler.getProjectStats(projectId);
         return ResponseEntity.ok(stats);
     }
 
-    @PreAuthorize("hasRole('OBSERVER')")
-    @GetMapping("/progress/{projectId}")
-    public ResponseEntity<ProjectStatsDto> getProjectProgress(@PathVariable Long projectId) {
-        ProjectStatsDto stats = projectHandler.getProjectStats(projectId);
-        return ResponseEntity.ok(stats);
-    }
 
     @PreAuthorize("hasRole('MANAGER')")
     @PostMapping("/restrictUser/{projectId}")
