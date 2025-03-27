@@ -47,6 +47,7 @@ public class UserJpaAdapter implements IUserPersistencePort {
         }
         UserEntity userEntity = userEntityMapper.toEntity(userModel);
         userEntity.setRoleEntity(role);
+        userEntity.setTeam(null);
         userRepository.save(userEntity);
     }
 
