@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -26,6 +27,7 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
@@ -60,6 +62,8 @@ public class WebSecurityConfig {
         http.cors().configurationSource(corsConfigurationSource()).and().csrf().disable()
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/v1/auth/login").permitAll()
+                        .requestMatchers("/graphiql/**", "/graphql/**").permitAll()
+                        .requestMatchers("/api/v1/user/saveUser").permitAll()
                         .requestMatchers(HttpMethod.GET, "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )
