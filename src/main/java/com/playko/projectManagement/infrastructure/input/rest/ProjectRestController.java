@@ -2,6 +2,7 @@ package com.playko.projectManagement.infrastructure.input.rest;
 
 import com.playko.projectManagement.application.dto.request.project.ProjectDeadlineRequestDto;
 import com.playko.projectManagement.application.dto.request.project.ProjectRequestDto;
+import com.playko.projectManagement.application.dto.request.project.UserRestrictionRequestDto;
 import com.playko.projectManagement.application.dto.response.ProjectStatsDto;
 import com.playko.projectManagement.application.handler.IProjectHandler;
 import io.swagger.v3.oas.annotations.Operation;
@@ -83,15 +84,17 @@ public class ProjectRestController {
 
 
     @PreAuthorize("hasRole('MANAGER')")
-    @PostMapping("/restrictUser/{projectId}")
-    public ResponseEntity<String> restrictUser(@PathVariable Long projectId, @RequestParam String email) {
-        projectHandler.restrictUserFromProject(projectId, email);
+    @PostMapping("/restrictUser")
+    public ResponseEntity<String> restrictUser(@Valid @RequestBody UserRestrictionRequestDto requestDto) {
+        projectHandler.restrictUserFromProject(requestDto.getProjectId(), requestDto.getEmail());
         return ResponseEntity.ok("Usuario restringido correctamente.");
     }
+
     @PreAuthorize("hasRole('MANAGER')")
-    @DeleteMapping("/removeRestriction/{projectId}")
-    public ResponseEntity<String> removeRestriction(@PathVariable Long projectId, @RequestParam String email) {
-        projectHandler.removeUserRestriction(projectId, email);
+    @DeleteMapping("/removeRestriction")
+    public ResponseEntity<String> removeRestriction(@Valid @RequestBody UserRestrictionRequestDto requestDto) {
+        projectHandler.removeUserRestriction(requestDto.getProjectId(), requestDto.getEmail());
         return ResponseEntity.ok("Restricción eliminada correctamente.");
     }
+
 }
