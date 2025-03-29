@@ -54,6 +54,12 @@ public class BoardRestController {
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Save a new board")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Board created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request data"),
+            @ApiResponse(responseCode = "403", description = "User not authorized")
+    })
     @PostMapping("/save")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Void> saveBoard(@RequestBody BoardRequestDto boardRequestDto) {
