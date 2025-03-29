@@ -31,6 +31,7 @@ public class SubTaskRestController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER', 'CONTRIBUTOR', 'USER')")
     @GetMapping("/{taskId}")
     public ResponseEntity<List<SubTaskResponseDto>> getSubTasksByTask(@PathVariable Long taskId) {
         return ResponseEntity.ok(subTaskHandler.getSubTasksByTask(taskId));
