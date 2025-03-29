@@ -83,6 +83,12 @@ public class ProjectRestController {
     }
 
 
+    @Operation(summary = "Restrict a user from a project")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User restricted successfully"),
+            @ApiResponse(responseCode = "404", description = "Project or user not found"),
+            @ApiResponse(responseCode = "400", description = "Invalid request data")
+    })
     @PreAuthorize("hasRole('MANAGER')")
     @PostMapping("/restrictUser")
     public ResponseEntity<String> restrictUser(@Valid @RequestBody UserRestrictionRequestDto requestDto) {
@@ -90,11 +96,18 @@ public class ProjectRestController {
         return ResponseEntity.ok("Usuario restringido correctamente.");
     }
 
+    @Operation(summary = "Remove restriction from a user in a project")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User restriction removed successfully"),
+            @ApiResponse(responseCode = "404", description = "Project or user not found"),
+            @ApiResponse(responseCode = "400", description = "Invalid request data")
+    })
     @PreAuthorize("hasRole('MANAGER')")
     @DeleteMapping("/removeRestriction")
     public ResponseEntity<String> removeRestriction(@Valid @RequestBody UserRestrictionRequestDto requestDto) {
         projectHandler.removeUserRestriction(requestDto.getProjectId(), requestDto.getEmail());
         return ResponseEntity.ok("Restricción eliminada correctamente.");
     }
+
 
 }
