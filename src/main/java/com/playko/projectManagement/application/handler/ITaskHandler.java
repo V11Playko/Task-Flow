@@ -25,5 +25,5 @@ public interface ITaskHandler {
     void deleteTask(Long taskId);
     List<TaskResponseDto> searchTasksByKeyword(String keyword);
 
-    String storeFile(MultipartFile file) throws IOException;
+    String storeFile(MultipartFile file) throws Exception;
 }

@@ -20,5 +20,5 @@ public interface ITaskPersistencePort {
     long calculateTaskDuration(Long taskId);
     void deleteTask(Long taskId);
     List<TaskModel> searchTasksByKeyword(String keyword);
-    String storeFile(MultipartFile file) throws IOException;
+    String storeFile(MultipartFile file) throws Exception;
 }

@@ -69,7 +69,7 @@ public class TaskUseCase implements ITaskServicePort {
     }
 
     @Override
-    public String storeFile(MultipartFile file) throws IOException {
+    public String storeFile(MultipartFile file) throws Exception {
         return taskPersistencePort.storeFile(file);
     }
 }
