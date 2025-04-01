@@ -80,7 +80,7 @@ public class TaskHandler implements ITaskHandler {
     }
 
     @Override
-    public String storeFile(MultipartFile file) throws IOException {
+    public String storeFile(MultipartFile file) throws Exception {
         return taskServicePort.storeFile(file);
     }
 }
