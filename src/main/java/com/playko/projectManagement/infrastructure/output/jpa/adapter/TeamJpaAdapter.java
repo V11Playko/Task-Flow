@@ -18,7 +18,6 @@ import com.playko.projectManagement.infrastructure.output.jpa.repository.IUserRe
 import com.playko.projectManagement.shared.enums.TaskState;
 import lombok.RequiredArgsConstructor;
 
-import java.io.IOException;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +32,6 @@ public class TeamJpaAdapter implements ITeamPersistencePort {
     private final IUserRepository userRepository;
     private final IEmailHandler emailHandler;
     private final ITaskRepository taskRepository;
-    private final PdfJpaAdapter pdfJpaAdapter;
     @Override
     public void saveTeam(TeamModel teamModel) {
         TeamEntity teamEntity = teamEntityMapper.toEntity(teamModel);
@@ -117,10 +115,5 @@ public class TeamJpaAdapter implements ITeamPersistencePort {
 
         return new TeamPerformanceReportDto(teamId, team.getName(), completedTasksPerUser,
                 averageCompletionTime, totalTasks, completedTasks, inProgressTasks);
-    }
-
-    public byte[] generatePerformanceReportPdf(Long teamId) throws IOException {
-        TeamPerformanceReportDto report = generatePerformanceReport(teamId);
-        return pdfJpaAdapter.generatePerformanceReportPdf(report);
     }
 }
