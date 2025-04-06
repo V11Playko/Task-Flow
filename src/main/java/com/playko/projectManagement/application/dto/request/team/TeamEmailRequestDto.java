@@ -11,4 +11,5 @@ public class TeamEmailRequestDto {
     private Long teamId;
     private String subject;
     private String message;
+    private String remitente;
 }
