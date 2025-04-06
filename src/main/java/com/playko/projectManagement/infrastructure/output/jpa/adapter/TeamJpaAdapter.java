@@ -1,6 +1,7 @@
 package com.playko.projectManagement.infrastructure.output.jpa.adapter;
 
 import com.playko.projectManagement.application.dto.request.EmailRequestDto;
+import com.playko.projectManagement.application.dto.request.team.TeamEmailRequestDto;
 import com.playko.projectManagement.application.dto.request.team.TeamPerformanceReportDto;
 import com.playko.projectManagement.application.handler.IEmailHandler;
 import com.playko.projectManagement.domain.model.TeamModel;
@@ -115,5 +116,20 @@ public class TeamJpaAdapter implements ITeamPersistencePort {
 
         return new TeamPerformanceReportDto(teamId, team.getName(), completedTasksPerUser,
                 averageCompletionTime, totalTasks, completedTasks, inProgressTasks);
+    }
+
+    @Override
+    public void sendEmailToTeam(TeamEmailRequestDto emailRequest) {
+        TeamEntity team = teamRepository.findById(emailRequest.getTeamId())
+                .orElseThrow(TeamNotFoundException::new);
+
+        for (UserEntity user : team.getUsers()) {
+            EmailRequestDto individualEmail = new EmailRequestDto();
+            individualEmail.setDestinatario(user.getEmail());
+            individualEmail.setAsunto(emailRequest.getSubject());
+            individualEmail.setMensaje("Hola " + user.getName() + ",\n\n" + emailRequest.getMessage());
+
+            emailHandler.sendEmail(individualEmail);
+        }
     }
 }
