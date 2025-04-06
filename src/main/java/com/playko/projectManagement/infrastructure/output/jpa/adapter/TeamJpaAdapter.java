@@ -16,6 +16,7 @@ import com.playko.projectManagement.infrastructure.output.jpa.mapper.ITeamEntity
 import com.playko.projectManagement.infrastructure.output.jpa.repository.ITaskRepository;
 import com.playko.projectManagement.infrastructure.output.jpa.repository.ITeamRepository;
 import com.playko.projectManagement.infrastructure.output.jpa.repository.IUserRepository;
+import com.playko.projectManagement.shared.SecurityUtils;
 import com.playko.projectManagement.shared.enums.TaskState;
 import lombok.RequiredArgsConstructor;
 
@@ -33,6 +34,8 @@ public class TeamJpaAdapter implements ITeamPersistencePort {
     private final IUserRepository userRepository;
     private final IEmailHandler emailHandler;
     private final ITaskRepository taskRepository;
+    private final SecurityUtils securityUtils;
+
     @Override
     public void saveTeam(TeamModel teamModel) {
         TeamEntity teamEntity = teamEntityMapper.toEntity(teamModel);
@@ -123,11 +126,21 @@ public class TeamJpaAdapter implements ITeamPersistencePort {
         TeamEntity team = teamRepository.findById(emailRequest.getTeamId())
                 .orElseThrow(TeamNotFoundException::new);
 
+        String correo = securityUtils.obtenerCorreoDelToken();
+
+        boolean isMember = team.getUsers().stream()
+                .anyMatch(user -> user.getEmail().equalsIgnoreCase(correo));
+
+        if (!isMember) {
+            throw new UserNotInTeamException();
+        }
+
         for (UserEntity user : team.getUsers()) {
             EmailRequestDto individualEmail = new EmailRequestDto();
             individualEmail.setDestinatario(user.getEmail());
             individualEmail.setAsunto(emailRequest.getSubject());
             individualEmail.setMensaje("Hola " + user.getName() + ",\n\n" + emailRequest.getMessage());
+            individualEmail.setRemitente(correo);
 
             emailHandler.sendEmail(individualEmail);
         }
