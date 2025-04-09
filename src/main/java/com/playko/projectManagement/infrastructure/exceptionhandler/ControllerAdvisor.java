@@ -11,6 +11,7 @@ import com.playko.projectManagement.infrastructure.exception.NoUsersFoundExcepti
 import com.playko.projectManagement.infrastructure.exception.ProjectAlreadyExistsException;
 import com.playko.projectManagement.infrastructure.exception.ProjectNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.ProjectsNotFoundException;
+import com.playko.projectManagement.infrastructure.exception.RoleNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.StatsNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.SubTaskNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.TaskNotFoundException;
@@ -47,6 +48,7 @@ import static com.playko.projectManagement.shared.constants.Exceptions.PROJECTS_
 import static com.playko.projectManagement.shared.constants.Exceptions.PROJECT_ALREADY_EXISTS_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.PROJECT_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.RESPONSE_MESSAGE_KEY;
+import static com.playko.projectManagement.shared.constants.Exceptions.ROLE_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.SUB_TASK_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.TASK_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.TEAM_NOT_FOUND_MESSAGE;
@@ -228,5 +230,11 @@ public class ControllerAdvisor {
             FileNotFoundException fileNotFoundException) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, FILE_NOT_FOUND_MESSAGE));
+    }
+    @ExceptionHandler(RoleNotFoundException.class)
+    public ResponseEntity<Map<String, String>> roleNotFoundException(
+            RoleNotFoundException roleNotFoundException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, ROLE_NOT_FOUND_MESSAGE));
     }
 }
