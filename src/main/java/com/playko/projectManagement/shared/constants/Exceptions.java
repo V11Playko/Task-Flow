@@ -48,5 +48,6 @@ public class Exceptions {
     public static final String INVALID_KEYWORD_MESSAGE = "La palabra clave no puede estar vacía.";
     public static final String FILE_NOT_FOUND_MESSAGE = "File not found.";
     public static final String ROLE_NOT_FOUND_MESSAGE = "Role not found.";
+    public static final String USER_ALREADY_IN_TEAM_MESSAGE = "El usuario ya esta en el equipo.";
 
 }
