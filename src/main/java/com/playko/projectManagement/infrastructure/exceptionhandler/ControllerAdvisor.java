@@ -2,6 +2,7 @@ package com.playko.projectManagement.infrastructure.exceptionhandler;
 
 import com.playko.projectManagement.infrastructure.exception.BoardColumnNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.BoardNotFoundException;
+import com.playko.projectManagement.infrastructure.exception.EmptyTeamException;
 import com.playko.projectManagement.infrastructure.exception.FileNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.InvalidKeywordException;
 import com.playko.projectManagement.infrastructure.exception.InvalidProjectStateException;
@@ -41,6 +42,7 @@ import java.util.Set;
 import static com.playko.projectManagement.shared.constants.Exceptions.BOARD_COLUMN_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.BOARD_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.EMAIL_NOT_SEND_MESSAGE;
+import static com.playko.projectManagement.shared.constants.Exceptions.EMPTY_TEAM_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.FILE_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.INVALID_KEYWORD_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.INVALID_PROJECT_STATE_MESSAGE;
@@ -244,5 +246,11 @@ public class ControllerAdvisor {
             UserAlreadyInTeamException userAlreadyInTeamException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, USER_ALREADY_IN_TEAM_MESSAGE));
+    }
+    @ExceptionHandler(EmptyTeamException.class)
+    public ResponseEntity<Map<String, String>> emptyTeamException(
+            EmptyTeamException emptyTeamException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, EMPTY_TEAM_MESSAGE));
     }
 }
