@@ -8,6 +8,7 @@ import com.playko.projectManagement.infrastructure.exception.SubTaskNotFoundExce
 import com.playko.projectManagement.infrastructure.exception.TaskNotFoundException;
 import com.playko.projectManagement.infrastructure.output.jpa.entity.SubTaskEntity;
 import com.playko.projectManagement.infrastructure.output.jpa.entity.TaskEntity;
+import com.playko.projectManagement.infrastructure.output.jpa.entity.UserEntity;
 import com.playko.projectManagement.infrastructure.output.jpa.mapper.ISubTaskEntityMapper;
 import com.playko.projectManagement.infrastructure.output.jpa.repository.ISubTaskRepository;
 import com.playko.projectManagement.infrastructure.output.jpa.repository.ITaskRepository;
@@ -66,13 +67,16 @@ public class SubTaskJpaAdapter implements ISubTaskPersistencePort {
 
         subTaskRepository.save(subTaskEntity);
 
-        EmailRequestDto emailRequestDto = new EmailRequestDto();
-        emailRequestDto.setDestinatario(subTaskEntity.getTask().getAssignedUser().getEmail());
-        emailRequestDto.setAsunto("Actualización de Subtarea");
-        String message = String.format("Tu subtarea '%s' ha sido actualizada.",
-                subTaskEntity.getTitle());
-        emailRequestDto.setMensaje(message);
-        emailHandler.sendEmail(emailRequestDto);
+        UserEntity assignedUser = subTaskEntity.getTask().getAssignedUser();
+        if (assignedUser != null) {
+            EmailRequestDto emailRequestDto = new EmailRequestDto();
+            emailRequestDto.setDestinatario(assignedUser.getEmail());
+            emailRequestDto.setAsunto("Actualización de Subtarea");
+            String message = String.format("Tu subtarea '%s' ha sido actualizada.",
+                    subTaskEntity.getTitle());
+            emailRequestDto.setMensaje(message);
+            emailHandler.sendEmail(emailRequestDto);
+        }
     }
 
     @Override
