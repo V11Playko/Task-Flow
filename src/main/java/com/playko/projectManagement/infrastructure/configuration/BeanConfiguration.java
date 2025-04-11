@@ -180,8 +180,10 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public IBoardPersistencePort boardPersistencePort(IBoardRepository boardRepository, IBoardEntityMapper boardEntityMapper,ITaskRepository taskRepository, IBoardColumnRepository boardColumnRepository, IProjectRepository projectRepository) {
-        return new BoardJpaAdapter(boardRepository, boardEntityMapper, taskRepository, boardColumnRepository, projectRepository);
+    public IBoardPersistencePort boardPersistencePort(IBoardRepository boardRepository, IBoardEntityMapper boardEntityMapper,
+                                                      ITaskRepository taskRepository, IBoardColumnRepository boardColumnRepository,
+                                                      IProjectRepository projectRepository, SecurityUtils securityUtils) {
+        return new BoardJpaAdapter(boardRepository, boardEntityMapper, taskRepository, boardColumnRepository, projectRepository, securityUtils);
     }
     @Bean
     public IBoardServicePort boardServicePort(IBoardPersistencePort boardPersistencePort) {
