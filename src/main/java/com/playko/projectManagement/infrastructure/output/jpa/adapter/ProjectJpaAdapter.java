@@ -113,7 +113,6 @@ public class ProjectJpaAdapter implements IProjectPersistencePort {
                 daysRemaining,
                 progressStatus,
                 taskCounts.getOrDefault(TaskState.IN_PROGRESS, 0L).intValue()
-                        + taskCounts.getOrDefault(TaskState.IN_PROGRESS, 0L).intValue()
                         + taskCounts.getOrDefault(TaskState.DONE, 0L).intValue(),
                 taskCounts.getOrDefault(TaskState.DONE, 0L).intValue(),
                 taskCounts.getOrDefault(TaskState.IN_PROGRESS, 0L).intValue(),
