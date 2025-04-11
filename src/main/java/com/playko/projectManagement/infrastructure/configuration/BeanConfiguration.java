@@ -169,8 +169,9 @@ public class BeanConfiguration {
 
     @Bean
     public ICommentPersistencePort commentPersistencePort(ICommentRepository commentRepository, IUserRepository userRepository,
-                                                          ITaskRepository taskRepository, ICommentEntityMapper commentEntityMapper) {
-        return new CommentJpaAdapter(commentRepository, userRepository, taskRepository, commentEntityMapper);
+                                                          ITaskRepository taskRepository, ICommentEntityMapper commentEntityMapper,
+                                                          SecurityUtils securityUtils) {
+        return new CommentJpaAdapter(commentRepository, userRepository, taskRepository, commentEntityMapper, securityUtils);
     }
 
     @Bean
