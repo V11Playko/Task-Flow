@@ -6,6 +6,7 @@ import com.playko.projectManagement.infrastructure.exception.EmptyTeamException;
 import com.playko.projectManagement.infrastructure.exception.FileNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.InvalidKeywordException;
 import com.playko.projectManagement.infrastructure.exception.InvalidProjectStateException;
+import com.playko.projectManagement.infrastructure.exception.InvalidRestrictionException;
 import com.playko.projectManagement.infrastructure.exception.InvalidTaskStateException;
 import com.playko.projectManagement.infrastructure.exception.MessageNotSendException;
 import com.playko.projectManagement.infrastructure.exception.NoUsersFoundException;
@@ -46,6 +47,7 @@ import static com.playko.projectManagement.shared.constants.Exceptions.EMPTY_TEA
 import static com.playko.projectManagement.shared.constants.Exceptions.FILE_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.INVALID_KEYWORD_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.INVALID_PROJECT_STATE_MESSAGE;
+import static com.playko.projectManagement.shared.constants.Exceptions.INVALID_RESTRICTION_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.INVALID_TASK_STATE_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.PROJECTS_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.PROJECT_ALREADY_EXISTS_MESSAGE;
@@ -252,5 +254,11 @@ public class ControllerAdvisor {
             EmptyTeamException emptyTeamException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, EMPTY_TEAM_MESSAGE));
+    }
+    @ExceptionHandler(InvalidRestrictionException.class)
+    public ResponseEntity<Map<String, String>> invalidRestrictionException(
+            InvalidRestrictionException invalidRestrictionException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, INVALID_RESTRICTION_MESSAGE));
     }
 }
