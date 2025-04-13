@@ -4,6 +4,7 @@ import com.playko.projectManagement.domain.model.BoardModel;
 import com.playko.projectManagement.domain.spi.IBoardPersistencePort;
 import com.playko.projectManagement.infrastructure.exception.BoardColumnNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.BoardNotFoundException;
+import com.playko.projectManagement.infrastructure.exception.InvalidBoardOperationException;
 import com.playko.projectManagement.infrastructure.exception.ProjectNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.TaskNotFoundException;
 import com.playko.projectManagement.infrastructure.output.jpa.entity.BoardColumnEntity;
@@ -47,6 +48,10 @@ public class BoardJpaAdapter implements IBoardPersistencePort {
 
         String correoAutenticado = securityUtils.obtenerCorreoDelToken();
         securityUtils.validarAccesoProyecto(taskEntity.getProject().getId(), correoAutenticado);
+
+        if (!taskEntity.getBoardColumn().getBoard().getId().equals(boardColumn.getBoard().getId())) {
+            throw new InvalidBoardOperationException();
+        }
 
 
         taskEntity.setBoardColumn(boardColumn);
