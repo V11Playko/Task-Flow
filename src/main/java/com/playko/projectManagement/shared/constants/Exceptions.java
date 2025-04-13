@@ -51,5 +51,6 @@ public class Exceptions {
     public static final String USER_ALREADY_IN_TEAM_MESSAGE = "El usuario ya esta en el equipo.";
     public static final String EMPTY_TEAM_MESSAGE = "El equipo no tiene miembros";
     public static final String INVALID_RESTRICTION_MESSAGE = "No se puede restringir al propietario del proyecto.";
+    public static final String INVALID_BOARD_OPERATION_MESSAGE = "La columna no pertenece al mismo tablero que la tarea.";
 
 }
