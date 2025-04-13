@@ -11,6 +11,7 @@ import com.playko.projectManagement.infrastructure.output.jpa.mapper.ICommentEnt
 import com.playko.projectManagement.infrastructure.output.jpa.repository.ICommentRepository;
 import com.playko.projectManagement.infrastructure.output.jpa.repository.ITaskRepository;
 import com.playko.projectManagement.infrastructure.output.jpa.repository.IUserRepository;
+import com.playko.projectManagement.shared.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -22,6 +23,7 @@ public class CommentJpaAdapter implements ICommentPersistencePort {
     private final IUserRepository userRepository;
     private final ITaskRepository taskRepository;
     private final ICommentEntityMapper commentEntityMapper;
+    private final SecurityUtils securityUtils;
 
     @Override
     public void addComment(CommentModel commentModel) {
@@ -29,6 +31,10 @@ public class CommentJpaAdapter implements ICommentPersistencePort {
                 .orElseThrow(TaskNotFoundException::new);
         UserEntity user = userRepository.findById(commentModel.getUser().getId())
                 .orElseThrow(UserNotFoundException::new);
+
+        String correoAutenticado = securityUtils.obtenerCorreoDelToken();
+        securityUtils.validarAccesoProyecto(task.getProject().getId(), correoAutenticado);
+
 
         CommentEntity commentEntity = commentEntityMapper.toEntity(commentModel);
         commentEntity.setTask(task);
@@ -40,6 +46,12 @@ public class CommentJpaAdapter implements ICommentPersistencePort {
 
     @Override
     public List<CommentModel> getCommentsByTask(Long taskId) {
+        TaskEntity task = taskRepository.findById(taskId)
+                .orElseThrow(TaskNotFoundException::new);
+
+        String correoAutenticado = securityUtils.obtenerCorreoDelToken();
+        securityUtils.validarAccesoProyecto(task.getProject().getId(), correoAutenticado);
+
         return commentEntityMapper.toModelList(commentRepository.findByTaskId(taskId));
     }
 
