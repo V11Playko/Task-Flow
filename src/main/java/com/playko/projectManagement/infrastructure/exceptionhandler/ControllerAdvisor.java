@@ -4,6 +4,7 @@ import com.playko.projectManagement.infrastructure.exception.BoardColumnNotFound
 import com.playko.projectManagement.infrastructure.exception.BoardNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.EmptyTeamException;
 import com.playko.projectManagement.infrastructure.exception.FileNotFoundException;
+import com.playko.projectManagement.infrastructure.exception.InvalidBoardOperationException;
 import com.playko.projectManagement.infrastructure.exception.InvalidKeywordException;
 import com.playko.projectManagement.infrastructure.exception.InvalidProjectStateException;
 import com.playko.projectManagement.infrastructure.exception.InvalidRestrictionException;
@@ -45,6 +46,7 @@ import static com.playko.projectManagement.shared.constants.Exceptions.BOARD_NOT
 import static com.playko.projectManagement.shared.constants.Exceptions.EMAIL_NOT_SEND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.EMPTY_TEAM_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.FILE_NOT_FOUND_MESSAGE;
+import static com.playko.projectManagement.shared.constants.Exceptions.INVALID_BOARD_OPERATION_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.INVALID_KEYWORD_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.INVALID_PROJECT_STATE_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.INVALID_RESTRICTION_MESSAGE;
@@ -260,5 +262,12 @@ public class ControllerAdvisor {
             InvalidRestrictionException invalidRestrictionException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, INVALID_RESTRICTION_MESSAGE));
+    }
+
+    @ExceptionHandler(InvalidBoardOperationException.class)
+    public ResponseEntity<Map<String, String>> invalidBoardOperationException(
+            InvalidBoardOperationException invalidBoardOperationException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, INVALID_BOARD_OPERATION_MESSAGE));
     }
 }
