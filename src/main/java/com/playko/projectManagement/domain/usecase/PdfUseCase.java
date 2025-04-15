@@ -1,6 +1,5 @@
 package com.playko.projectManagement.domain.usecase;
 
-import com.playko.projectManagement.application.dto.request.team.TeamPerformanceReportDto;
 import com.playko.projectManagement.domain.api.IPdfServicePort;
 import com.playko.projectManagement.domain.spi.IPdfPersistencePort;
 

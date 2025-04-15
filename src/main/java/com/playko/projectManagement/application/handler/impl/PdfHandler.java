@@ -1,6 +1,5 @@
 package com.playko.projectManagement.application.handler.impl;
 
-import com.playko.projectManagement.application.dto.request.team.TeamPerformanceReportDto;
 import com.playko.projectManagement.application.handler.IPdfHandler;
 import com.playko.projectManagement.domain.api.IPdfServicePort;
 import jakarta.transaction.Transactional;
