@@ -1,7 +1,7 @@
 package com.playko.projectManagement.application.handler.impl;
 
 import com.playko.projectManagement.application.dto.request.team.TeamEmailRequestDto;
-import com.playko.projectManagement.application.dto.request.team.TeamPerformanceReportDto;
+import com.playko.projectManagement.application.dto.response.TeamPerformanceReportDto;
 import com.playko.projectManagement.application.dto.request.team.TeamRequestDto;
 import com.playko.projectManagement.application.handler.ITeamHandler;
 import com.playko.projectManagement.application.mapper.request.ITeamRequestMapper;

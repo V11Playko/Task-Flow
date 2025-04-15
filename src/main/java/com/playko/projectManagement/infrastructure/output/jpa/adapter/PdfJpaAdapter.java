@@ -1,6 +1,6 @@
 package com.playko.projectManagement.infrastructure.output.jpa.adapter;
 
-import com.playko.projectManagement.application.dto.request.team.TeamPerformanceReportDto;
+import com.playko.projectManagement.application.dto.response.TeamPerformanceReportDto;
 import com.playko.projectManagement.application.dto.response.ProjectStatsDto;
 import com.playko.projectManagement.application.handler.IProjectHandler;
 import com.playko.projectManagement.application.handler.ITeamHandler;

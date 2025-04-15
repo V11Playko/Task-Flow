@@ -1,7 +1,5 @@
 package com.playko.projectManagement.domain.api;
 
-import com.playko.projectManagement.application.dto.request.team.TeamPerformanceReportDto;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 

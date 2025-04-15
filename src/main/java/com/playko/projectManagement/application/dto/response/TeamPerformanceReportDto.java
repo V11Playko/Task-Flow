@@ -1,4 +1,4 @@
-package com.playko.projectManagement.application.dto.request.team;
+package com.playko.projectManagement.application.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

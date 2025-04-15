@@ -2,7 +2,7 @@ package com.playko.projectManagement.infrastructure.output.jpa.adapter;
 
 import com.playko.projectManagement.application.dto.request.EmailRequestDto;
 import com.playko.projectManagement.application.dto.request.team.TeamEmailRequestDto;
-import com.playko.projectManagement.application.dto.request.team.TeamPerformanceReportDto;
+import com.playko.projectManagement.application.dto.response.TeamPerformanceReportDto;
 import com.playko.projectManagement.application.handler.IEmailHandler;
 import com.playko.projectManagement.domain.model.TeamModel;
 import com.playko.projectManagement.domain.spi.ITeamPersistencePort;
