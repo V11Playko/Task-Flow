@@ -48,7 +48,7 @@ public class UserRestController {
             @ApiResponse(responseCode = "204", description = "No users found", content = @Content)
     })
     @GetMapping("/allUsers")
-    @PreAuthorize("hasAnyRole('MANAGER', 'CONTRIBUTOR')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'CONTRIBUTOR')")
     public ResponseEntity<List<UserResponseDto>> getAllUsers() {
         List<UserResponseDto> users = userHandler.findAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
@@ -60,7 +60,7 @@ public class UserRestController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @GetMapping("getUser/{email}")
-    @PreAuthorize("hasAnyRole('MANAGER', 'CONTRIBUTOR')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'CONTRIBUTOR')")
     public ResponseEntity<UserResponseDto> getUserByEmail(@PathVariable String email) {
         UserResponseDto user = userHandler.findByEmail(email);
         return new ResponseEntity<>(user, HttpStatus.OK);
@@ -72,7 +72,7 @@ public class UserRestController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @PutMapping("/updateUser/{id}")
-    @PreAuthorize("hasAnyRole('MANAGER', 'USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'USER')")
     public ResponseEntity<Void> updateUser(
             @PathVariable Long id,
             @Valid @RequestBody UserUpdateRequestDto userUpdateRequestDto) {
@@ -86,7 +86,7 @@ public class UserRestController {
             @ApiResponse(responseCode = "409", description = "User already exists", content = @Content)
     })
     @DeleteMapping("/deleteUser/{id}")
-    @PreAuthorize("hasAnyRole('MANAGER', 'USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'USER')")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         userHandler.deleteUser(id);
         return ResponseEntity.status(HttpStatus.OK).build();
