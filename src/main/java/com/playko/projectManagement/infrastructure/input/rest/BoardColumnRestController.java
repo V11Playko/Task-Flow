@@ -29,7 +29,7 @@ public class BoardColumnRestController {
             @ApiResponse(responseCode = "403", description = "User not authorized"),
             @ApiResponse(responseCode = "404", description = "Board not found")
     })
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @PostMapping("/add/{boardId}")
     public ResponseEntity<Void> addColumnToBoard(@PathVariable Long boardId,
                                                  @RequestBody BoardColumnRequestDto columnDto) {
@@ -38,3 +38,4 @@ public class BoardColumnRestController {
     }
 
 }
+
