@@ -32,7 +32,7 @@ public class CommentRestController {
             @ApiResponse(responseCode = "404", description = "Task or User not found")
     })
     @PostMapping
-    @PreAuthorize("hasAnyRole('MANAGER', 'USER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'USER', 'ADMIN')")
     public ResponseEntity<Void> addComment(@Valid @RequestBody CommentRequestDto request) {
         commentHandler.addComment(request);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -44,8 +44,9 @@ public class CommentRestController {
             @ApiResponse(responseCode = "404", description = "Task not found")
     })
     @GetMapping("/{taskId}")
-    @PreAuthorize("hasAnyRole('MANAGER', 'USER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'USER', 'ADMIN')")
     public ResponseEntity<List<CommentResponseDto>> getCommentsByTask(@PathVariable Long taskId) {
         return new ResponseEntity<>(commentHandler.getCommentsByTask(taskId), HttpStatus.OK);
     }
 }
+
