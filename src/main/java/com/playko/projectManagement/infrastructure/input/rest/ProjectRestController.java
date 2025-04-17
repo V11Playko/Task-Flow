@@ -35,7 +35,7 @@ public class ProjectRestController {
             @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content)
     })
     @PostMapping("/createProject")
-    @PreAuthorize("hasAnyRole('MANAGER', 'USER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'USER', 'ADMIN')")
     public ResponseEntity<Void> createProject(@Valid @RequestBody ProjectRequestDto projectRequestDto) {
         projectHandler.createProject(projectRequestDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -47,7 +47,7 @@ public class ProjectRestController {
             @ApiResponse(responseCode = "404", description = "Project not found"),
             @ApiResponse(responseCode = "403", description = "User not authorized")
     })
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @PutMapping("/updateDeadline")
     public ResponseEntity<Void> updateProjectDeadline(@Valid @RequestBody ProjectDeadlineRequestDto request) {
         projectHandler.updateProjectDeadline(request);
@@ -61,7 +61,7 @@ public class ProjectRestController {
             @ApiResponse(responseCode = "400", description = "Project is not completed"),
             @ApiResponse(responseCode = "403", description = "User is not authorized")
     })
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @PutMapping("/archive/{projectId}")
     public ResponseEntity<Void> archiveProject(@PathVariable Long projectId) {
         projectHandler.archiveProject(projectId);
@@ -74,13 +74,12 @@ public class ProjectRestController {
             @ApiResponse(responseCode = "404", description = "Stats not found"),
             @ApiResponse(responseCode = "403", description = "User not authorized")
     })
-    @PreAuthorize("hasAnyRole('OBSERVER', 'USER')")
+    @PreAuthorize("hasAnyRole('OBSERVER', 'USER', 'ADMIN')")
     @GetMapping("/stats/{projectId}")
     public ResponseEntity<ProjectStatsDto> getProjectStats(@PathVariable Long projectId) {
         ProjectStatsDto stats = projectHandler.getProjectStats(projectId);
         return ResponseEntity.ok(stats);
     }
-
 
     @Operation(summary = "Restrict a user from a project")
     @ApiResponses(value = {
@@ -88,7 +87,7 @@ public class ProjectRestController {
             @ApiResponse(responseCode = "404", description = "Project or user not found"),
             @ApiResponse(responseCode = "400", description = "Invalid request data")
     })
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @PostMapping("/restrictUser")
     public ResponseEntity<String> restrictUser(@Valid @RequestBody UserRestrictionRequestDto requestDto) {
         projectHandler.restrictUserFromProject(requestDto.getProjectId(), requestDto.getEmail());
@@ -101,12 +100,10 @@ public class ProjectRestController {
             @ApiResponse(responseCode = "404", description = "Project or user not found"),
             @ApiResponse(responseCode = "400", description = "Invalid request data")
     })
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @DeleteMapping("/removeRestriction")
     public ResponseEntity<String> removeRestriction(@Valid @RequestBody UserRestrictionRequestDto requestDto) {
         projectHandler.removeUserRestriction(requestDto.getProjectId(), requestDto.getEmail());
         return ResponseEntity.ok("Restricción eliminada correctamente.");
     }
-
-
 }
