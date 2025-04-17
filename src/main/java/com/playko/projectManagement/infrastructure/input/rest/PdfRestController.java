@@ -34,7 +34,7 @@ public class PdfRestController {
             @ApiResponse(responseCode = "404", description = "Project not found"),
             @ApiResponse(responseCode = "500", description = "Error generating PDF report")
     })
-    @PreAuthorize("hasAnyRole('MANAGER', 'OBSERVER', 'USER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'OBSERVER', 'USER', 'ADMIN')")
     @GetMapping("/export/{projectId}")
     public ResponseEntity<InputStreamResource> exportProjectReport(@PathVariable Long projectId) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = pdfHandler.generatePdf(projectId);
