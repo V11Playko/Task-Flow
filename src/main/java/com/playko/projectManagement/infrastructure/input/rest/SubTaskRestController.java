@@ -33,7 +33,7 @@ public class SubTaskRestController {
             @ApiResponse(responseCode = "404", description = "Task not found"),
             @ApiResponse(responseCode = "400", description = "Invalid request data")
     })
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @PostMapping("/add/{taskId}")
     public ResponseEntity<Void> addSubTask(@PathVariable Long taskId, @RequestBody SubTaskRequestDto request) {
         subTaskHandler.addSubTask(taskId, request);
@@ -45,7 +45,7 @@ public class SubTaskRestController {
             @ApiResponse(responseCode = "200", description = "List of subtasks retrieved successfully"),
             @ApiResponse(responseCode = "404", description = "Task not found")
     })
-    @PreAuthorize("hasAnyRole('MANAGER', 'CONTRIBUTOR', 'USER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'CONTRIBUTOR', 'USER', 'ADMIN')")
     @GetMapping("/{taskId}")
     public ResponseEntity<List<SubTaskResponseDto>> getSubTasksByTask(@PathVariable Long taskId) {
         return ResponseEntity.ok(subTaskHandler.getSubTasksByTask(taskId));
@@ -57,7 +57,7 @@ public class SubTaskRestController {
             @ApiResponse(responseCode = "404", description = "Subtask not found"),
             @ApiResponse(responseCode = "400", description = "Invalid request data")
     })
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @PutMapping("/update/{subTaskId}")
     public ResponseEntity<Void> updateSubTask(@PathVariable Long subTaskId, @RequestBody SubTaskRequestDto request) {
         subTaskHandler.updateSubTask(subTaskId, request);
@@ -69,7 +69,7 @@ public class SubTaskRestController {
             @ApiResponse(responseCode = "204", description = "Subtask deleted successfully"),
             @ApiResponse(responseCode = "404", description = "Subtask not found")
     })
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @DeleteMapping("/delete/{subTaskId}")
     public ResponseEntity<Void> deleteSubTask(@PathVariable Long subTaskId) {
         subTaskHandler.deleteSubTask(subTaskId);
