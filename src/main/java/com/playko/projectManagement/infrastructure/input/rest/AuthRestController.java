@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthRestController {
     private final IAuthHandler authHandler;
 
-
     @Operation(summary = "Login into the system")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Login successful", content = @Content),
