@@ -2,11 +2,13 @@ package com.playko.projectManagement.infrastructure.output.jpa.adapter;
 
 import com.playko.projectManagement.application.dto.request.EmailRequestDto;
 import com.playko.projectManagement.application.dto.request.team.TeamEmailRequestDto;
-import com.playko.projectManagement.application.dto.request.team.TeamPerformanceReportDto;
+import com.playko.projectManagement.application.dto.response.TeamPerformanceReportDto;
 import com.playko.projectManagement.application.handler.IEmailHandler;
 import com.playko.projectManagement.domain.model.TeamModel;
 import com.playko.projectManagement.domain.spi.ITeamPersistencePort;
+import com.playko.projectManagement.infrastructure.exception.EmptyTeamException;
 import com.playko.projectManagement.infrastructure.exception.TeamNotFoundException;
+import com.playko.projectManagement.infrastructure.exception.UserAlreadyInTeamException;
 import com.playko.projectManagement.infrastructure.exception.UserNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.UserNotInTeamException;
 import com.playko.projectManagement.infrastructure.output.jpa.entity.TaskEntity;
@@ -46,6 +48,10 @@ public class TeamJpaAdapter implements ITeamPersistencePort {
     public void addUserToTeam(Long teamId, String emailUser) {
         TeamEntity teamEntity = teamRepository.findById(teamId).orElseThrow(TeamNotFoundException::new);
         UserEntity userEntity = userRepository.findByEmail(emailUser).orElseThrow(UserNotFoundException::new);
+
+        if (teamEntity.getUsers().contains(userEntity)) {
+            throw new UserAlreadyInTeamException();
+        }
 
         List<UserEntity> updatedUsers = new ArrayList<>(teamEntity.getUsers());
         updatedUsers.add(userEntity);
@@ -106,7 +112,12 @@ public class TeamJpaAdapter implements ITeamPersistencePort {
 
             double avgTime = userTasks.stream()
                     .filter(task -> task.getState() == TaskState.DONE)
-                    .mapToLong(task -> ChronoUnit.DAYS.between(task.getCreationDate(), task.getLimitDate()))
+                    .mapToLong(task -> {
+                        if (task.getCreationDate() != null && task.getLimitDate() != null) {
+                            return ChronoUnit.DAYS.between(task.getCreationDate(), task.getLimitDate());
+                        }
+                        return 0;
+                    })
                     .average()
                     .orElse(0.0);
 
@@ -130,6 +141,10 @@ public class TeamJpaAdapter implements ITeamPersistencePort {
 
         boolean isMember = team.getUsers().stream()
                 .anyMatch(user -> user.getEmail().equalsIgnoreCase(correo));
+
+        if (team.getUsers().isEmpty()) {
+            throw new EmptyTeamException();
+        }
 
         if (!isMember) {
             throw new UserNotInTeamException();

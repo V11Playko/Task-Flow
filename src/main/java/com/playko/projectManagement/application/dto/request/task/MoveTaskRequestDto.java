@@ -1,11 +1,14 @@
 package com.playko.projectManagement.application.dto.request.task;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Getter
 @Setter
+@AllArgsConstructor
 public class MoveTaskRequestDto {
 
     @NotNull(message = "El ID de la tarea no puede ser nulo")

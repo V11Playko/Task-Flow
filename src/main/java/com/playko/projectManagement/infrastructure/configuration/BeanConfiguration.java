@@ -169,8 +169,9 @@ public class BeanConfiguration {
 
     @Bean
     public ICommentPersistencePort commentPersistencePort(ICommentRepository commentRepository, IUserRepository userRepository,
-                                                          ITaskRepository taskRepository, ICommentEntityMapper commentEntityMapper) {
-        return new CommentJpaAdapter(commentRepository, userRepository, taskRepository, commentEntityMapper);
+                                                          ITaskRepository taskRepository, ICommentEntityMapper commentEntityMapper,
+                                                          SecurityUtils securityUtils) {
+        return new CommentJpaAdapter(commentRepository, userRepository, taskRepository, commentEntityMapper, securityUtils);
     }
 
     @Bean
@@ -179,8 +180,10 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public IBoardPersistencePort boardPersistencePort(IBoardRepository boardRepository, IBoardEntityMapper boardEntityMapper,ITaskRepository taskRepository, IBoardColumnRepository boardColumnRepository, IProjectRepository projectRepository) {
-        return new BoardJpaAdapter(boardRepository, boardEntityMapper, taskRepository, boardColumnRepository, projectRepository);
+    public IBoardPersistencePort boardPersistencePort(IBoardRepository boardRepository, IBoardEntityMapper boardEntityMapper,
+                                                      ITaskRepository taskRepository, IBoardColumnRepository boardColumnRepository,
+                                                      IProjectRepository projectRepository, SecurityUtils securityUtils) {
+        return new BoardJpaAdapter(boardRepository, boardEntityMapper, taskRepository, boardColumnRepository, projectRepository, securityUtils);
     }
     @Bean
     public IBoardServicePort boardServicePort(IBoardPersistencePort boardPersistencePort) {

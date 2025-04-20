@@ -3,6 +3,7 @@ package com.playko.projectManagement.infrastructure.output.jpa.adapter;
 import com.playko.projectManagement.domain.model.UserModel;
 import com.playko.projectManagement.domain.spi.IUserPersistencePort;
 import com.playko.projectManagement.infrastructure.exception.NoUsersFoundException;
+import com.playko.projectManagement.infrastructure.exception.RoleNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.UnauthorizedException;
 import com.playko.projectManagement.infrastructure.exception.UserAlreadyExistsException;
 import com.playko.projectManagement.infrastructure.exception.UserNotFoundException;
@@ -16,6 +17,7 @@ import com.playko.projectManagement.shared.enums.RoleEnum;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class UserJpaAdapter implements IUserPersistencePort {
@@ -41,7 +43,9 @@ public class UserJpaAdapter implements IUserPersistencePort {
 
     @Override
     public void saveUser(UserModel userModel) {
-        RoleEntity role = roleRepository.findByName(String.valueOf(RoleEnum.ROLE_USER));
+        RoleEntity role = Optional.ofNullable(roleRepository.findByName(String.valueOf(RoleEnum.ROLE_USER)))
+                .orElseThrow(RoleNotFoundException::new);
+
         if (userRepository.findByEmail(userModel.getEmail()).isPresent()) {
             throw new UserAlreadyExistsException();
         }
@@ -58,6 +62,11 @@ public class UserJpaAdapter implements IUserPersistencePort {
 
         UserEntity updatedUser = userEntityMapper.toEntity(userModel);
         updatedUser.setId(existingUser.getId()); // Asegurar que la entidad mantenga el ID
+        existingUser.setName(userModel.getName());
+        existingUser.setSurname(userModel.getSurname());
+        existingUser.setEmail(userModel.getEmail());
+        existingUser.setPhone(userModel.getPhone());
+        existingUser.setDniNumber(userModel.getDniNumber());
         userRepository.save(updatedUser);
     }
 

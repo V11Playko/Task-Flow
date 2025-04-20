@@ -2,21 +2,26 @@ package com.playko.projectManagement.infrastructure.exceptionhandler;
 
 import com.playko.projectManagement.infrastructure.exception.BoardColumnNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.BoardNotFoundException;
+import com.playko.projectManagement.infrastructure.exception.EmptyTeamException;
 import com.playko.projectManagement.infrastructure.exception.FileNotFoundException;
+import com.playko.projectManagement.infrastructure.exception.InvalidBoardOperationException;
 import com.playko.projectManagement.infrastructure.exception.InvalidKeywordException;
 import com.playko.projectManagement.infrastructure.exception.InvalidProjectStateException;
+import com.playko.projectManagement.infrastructure.exception.InvalidRestrictionException;
 import com.playko.projectManagement.infrastructure.exception.InvalidTaskStateException;
 import com.playko.projectManagement.infrastructure.exception.MessageNotSendException;
 import com.playko.projectManagement.infrastructure.exception.NoUsersFoundException;
 import com.playko.projectManagement.infrastructure.exception.ProjectAlreadyExistsException;
 import com.playko.projectManagement.infrastructure.exception.ProjectNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.ProjectsNotFoundException;
+import com.playko.projectManagement.infrastructure.exception.RoleNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.StatsNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.SubTaskNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.TaskNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.TeamNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.UnauthorizedException;
 import com.playko.projectManagement.infrastructure.exception.UserAlreadyExistsException;
+import com.playko.projectManagement.infrastructure.exception.UserAlreadyInTeamException;
 import com.playko.projectManagement.infrastructure.exception.UserAlreadyRestrictedException;
 import com.playko.projectManagement.infrastructure.exception.UserNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.UserNotInTeamException;
@@ -39,20 +44,25 @@ import java.util.Set;
 import static com.playko.projectManagement.shared.constants.Exceptions.BOARD_COLUMN_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.BOARD_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.EMAIL_NOT_SEND_MESSAGE;
+import static com.playko.projectManagement.shared.constants.Exceptions.EMPTY_TEAM_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.FILE_NOT_FOUND_MESSAGE;
+import static com.playko.projectManagement.shared.constants.Exceptions.INVALID_BOARD_OPERATION_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.INVALID_KEYWORD_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.INVALID_PROJECT_STATE_MESSAGE;
+import static com.playko.projectManagement.shared.constants.Exceptions.INVALID_RESTRICTION_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.INVALID_TASK_STATE_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.PROJECTS_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.PROJECT_ALREADY_EXISTS_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.PROJECT_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.RESPONSE_MESSAGE_KEY;
+import static com.playko.projectManagement.shared.constants.Exceptions.ROLE_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.SUB_TASK_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.TASK_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.TEAM_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.UNAUTHORIZED_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.USERS_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.USER_ALREADY_EXISTS_MESSAGE;
+import static com.playko.projectManagement.shared.constants.Exceptions.USER_ALREADY_IN_TEAM_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.USER_ALREADY_RESTRICTED_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.USER_NOT_FOUND_IN_TEAM_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.USER_NOT_FOUND_MESSAGE;
@@ -228,5 +238,36 @@ public class ControllerAdvisor {
             FileNotFoundException fileNotFoundException) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, FILE_NOT_FOUND_MESSAGE));
+    }
+    @ExceptionHandler(RoleNotFoundException.class)
+    public ResponseEntity<Map<String, String>> roleNotFoundException(
+            RoleNotFoundException roleNotFoundException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, ROLE_NOT_FOUND_MESSAGE));
+    }
+    @ExceptionHandler(UserAlreadyInTeamException.class)
+    public ResponseEntity<Map<String, String>> userAlreadyInTeamException(
+            UserAlreadyInTeamException userAlreadyInTeamException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, USER_ALREADY_IN_TEAM_MESSAGE));
+    }
+    @ExceptionHandler(EmptyTeamException.class)
+    public ResponseEntity<Map<String, String>> emptyTeamException(
+            EmptyTeamException emptyTeamException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, EMPTY_TEAM_MESSAGE));
+    }
+    @ExceptionHandler(InvalidRestrictionException.class)
+    public ResponseEntity<Map<String, String>> invalidRestrictionException(
+            InvalidRestrictionException invalidRestrictionException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, INVALID_RESTRICTION_MESSAGE));
+    }
+
+    @ExceptionHandler(InvalidBoardOperationException.class)
+    public ResponseEntity<Map<String, String>> invalidBoardOperationException(
+            InvalidBoardOperationException invalidBoardOperationException) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, INVALID_BOARD_OPERATION_MESSAGE));
     }
 }

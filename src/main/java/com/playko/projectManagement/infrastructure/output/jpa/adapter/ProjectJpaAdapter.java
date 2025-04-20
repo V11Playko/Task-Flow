@@ -6,6 +6,7 @@ import com.playko.projectManagement.application.handler.IEmailHandler;
 import com.playko.projectManagement.domain.model.ProjectModel;
 import com.playko.projectManagement.domain.spi.IProjectPersistencePort;
 import com.playko.projectManagement.infrastructure.exception.InvalidProjectStateException;
+import com.playko.projectManagement.infrastructure.exception.InvalidRestrictionException;
 import com.playko.projectManagement.infrastructure.exception.ProjectNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.UserAlreadyRestrictedException;
 import com.playko.projectManagement.infrastructure.exception.UserNotFoundException;
@@ -39,7 +40,10 @@ public class ProjectJpaAdapter implements IProjectPersistencePort {
     @Override
     public void createProject(ProjectModel projectModel) {
         ProjectEntity projectEntity = projectEntityMapper.toEntity(projectModel);
-        projectRepository.save(projectEntity);
+        if (projectModel.getOwner() == null || projectModel.getOwner().isBlank()) {
+            throw new UserNotFoundException();
+        }
+
 
         UserEntity userEntity = userRepository.findByEmail(projectModel.getOwner())
                 .orElseThrow(UserNotFoundException::new);
@@ -49,6 +53,8 @@ public class ProjectJpaAdapter implements IProjectPersistencePort {
             userEntity.setRoleEntity(roleEntity);
             userRepository.save(userEntity);
         }
+
+        projectRepository.save(projectEntity);
     }
 
     @Override
@@ -113,7 +119,7 @@ public class ProjectJpaAdapter implements IProjectPersistencePort {
                 daysRemaining,
                 progressStatus,
                 taskCounts.getOrDefault(TaskState.IN_PROGRESS, 0L).intValue()
-                        + taskCounts.getOrDefault(TaskState.IN_PROGRESS, 0L).intValue()
+                        + taskCounts.getOrDefault(TaskState.PENDING, 0L).intValue()
                         + taskCounts.getOrDefault(TaskState.DONE, 0L).intValue(),
                 taskCounts.getOrDefault(TaskState.DONE, 0L).intValue(),
                 taskCounts.getOrDefault(TaskState.IN_PROGRESS, 0L).intValue(),
@@ -128,6 +134,11 @@ public class ProjectJpaAdapter implements IProjectPersistencePort {
 
         ProjectEntity project = projectRepository.findById(projectId)
                 .orElseThrow(ProjectNotFoundException::new);
+
+        if (project.getOwner().equals(email)) {
+            throw new InvalidRestrictionException();
+        }
+
 
         if (!project.getRestrictedUsers().contains(email)) {
             project.getRestrictedUsers().add(email);

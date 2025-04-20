@@ -39,7 +39,7 @@ import java.util.List;
 public class TaskRestController {
     private final ITaskHandler taskHandler;
 
-    @PreAuthorize("hasRole('CONTRIBUTOR')")
+    @PreAuthorize("hasAnyRole('CONTRIBUTOR', 'ADMIN')")
     @GetMapping("/myTasks")
     public ResponseEntity<List<TaskResponseDto>> getTasksByUserEmail() {
         List<TaskResponseDto> tasks = taskHandler.getTasksByUserEmail();
@@ -52,7 +52,7 @@ public class TaskRestController {
             @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content)
     })
     @PostMapping("/saveTask")
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     public ResponseEntity<Void> saveTask(@Valid @RequestBody TaskRequestDto taskRequestDto) {
         taskHandler.saveTask(taskRequestDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -64,7 +64,7 @@ public class TaskRestController {
             @ApiResponse(responseCode = "404", description = "Task or User not found"),
             @ApiResponse(responseCode = "403", description = "User is not authorized")
     })
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @PostMapping("/assignTask")
     public ResponseEntity<Void> assignTaskToUser(@Valid @RequestBody TaskAssignmentRequestDto request) {
         taskHandler.assignTaskToUser(request);
@@ -77,7 +77,7 @@ public class TaskRestController {
             @ApiResponse(responseCode = "404", description = "Task or User not found"),
             @ApiResponse(responseCode = "403", description = "User is not authorized")
     })
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @PostMapping("/reassignTask")
     public ResponseEntity<Void> reassignTask(@Valid @RequestBody TaskReassignmentRequestDto request) {
         taskHandler.reassignTask(request);
@@ -90,7 +90,7 @@ public class TaskRestController {
             @ApiResponse(responseCode = "404", description = "Task not found"),
             @ApiResponse(responseCode = "403", description = "User not authorized")
     })
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     @PutMapping("/updateDeadline")
     public ResponseEntity<Void> updateTaskDeadline(@Valid @RequestBody TaskDeadlineRequestDto request) {
         taskHandler.updateTaskDeadline(request);
@@ -103,7 +103,7 @@ public class TaskRestController {
             @ApiResponse(responseCode = "404", description = "Task not found"),
             @ApiResponse(responseCode = "403", description = "User not authorized")
     })
-    @PreAuthorize("hasRole('CONTRIBUTOR')")
+    @PreAuthorize("hasAnyRole('CONTRIBUTOR', 'ADMIN')")
     @PutMapping("/updateState/{taskId}")
     public ResponseEntity<Void> updateTaskState(@PathVariable Long taskId, @RequestBody TaskStateUpdateRequestDto request) {
         taskHandler.updateTaskState(taskId, request.getNewState());
@@ -116,7 +116,7 @@ public class TaskRestController {
             @ApiResponse(responseCode = "404", description = "Task not found"),
             @ApiResponse(responseCode = "403", description = "User not authorized")
     })
-    @PreAuthorize("hasAnyRole('MANAGER', 'CONTRIBUTOR', 'USER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'CONTRIBUTOR', 'USER', 'ADMIN')")
     @GetMapping("/duration/{taskId}")
     public ResponseEntity<String> getTaskDuration(@PathVariable Long taskId) {
         long daysTaken = taskHandler.calculateTaskDuration(taskId);
@@ -131,7 +131,7 @@ public class TaskRestController {
             @ApiResponse(responseCode = "403", description = "User not authorized")
     })
     @DeleteMapping("/deleteTask/{id}")
-    @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskHandler.deleteTask(id);
         return ResponseEntity.status(HttpStatus.OK).build();
@@ -161,7 +161,7 @@ public class TaskRestController {
             @ApiResponse(responseCode = "200", description = "Archivo .ics generado correctamente"),
             @ApiResponse(responseCode = "401", description = "No autorizado")
     })
-    @PreAuthorize("hasAnyRole('USER', 'MANAGER')")
+    @PreAuthorize("hasAnyRole('USER', 'MANAGER', 'ADMIN')")
     @GetMapping("/calendar/export")
     public ResponseEntity<ByteArrayResource> exportTasksToIcs() {
         String icsContent = taskHandler.generateIcsForTasks();

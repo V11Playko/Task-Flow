@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -36,7 +35,7 @@ public class BoardRestController {
             @ApiResponse(responseCode = "404", description = "Board not found")
     })
     @GetMapping("/{boardId}")
-    @PreAuthorize("hasAnyRole('MANAGER', 'USER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'USER', 'ADMIN')")
     public ResponseEntity<BoardResponseDto> getBoardById(@PathVariable Long boardId) {
         BoardResponseDto board = boardHandler.getBoardById(boardId);
         return ResponseEntity.ok(board);
@@ -48,7 +47,7 @@ public class BoardRestController {
             @ApiResponse(responseCode = "404", description = "Task or Column not found")
     })
     @PutMapping("/tasks/move")
-    @PreAuthorize("hasAnyRole('MANAGER', 'USER')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'USER', 'ADMIN')")
     public ResponseEntity<Void> moveTask(@Valid @RequestBody MoveTaskRequestDto requestDto) {
         boardHandler.moveTask(requestDto.getTaskId(), requestDto.getTargetColumnId());
         return ResponseEntity.ok().build();
@@ -61,7 +60,7 @@ public class BoardRestController {
             @ApiResponse(responseCode = "403", description = "User not authorized")
     })
     @PostMapping("/save")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<Void> saveBoard(@RequestBody BoardRequestDto boardRequestDto) {
         boardHandler.saveBoard(boardRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
