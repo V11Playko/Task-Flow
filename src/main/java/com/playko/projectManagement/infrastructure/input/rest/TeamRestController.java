@@ -35,7 +35,7 @@ public class TeamRestController {
             @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content)
     })
     @PostMapping("/saveTeam")
-    @PreAuthorize("hasAnyRole('MANAGER', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'MANAGER', 'ADMIN')")
     public ResponseEntity<Void> saveTeam(@Valid @RequestBody TeamRequestDto teamRequestDto) {
         teamHandler.saveTeam(teamRequestDto);
         return new ResponseEntity<>(HttpStatus.CREATED);

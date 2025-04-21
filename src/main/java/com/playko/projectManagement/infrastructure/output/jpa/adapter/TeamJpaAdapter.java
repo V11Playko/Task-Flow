@@ -5,6 +5,7 @@ import com.playko.projectManagement.application.dto.request.team.TeamEmailReques
 import com.playko.projectManagement.application.dto.response.TeamPerformanceReportDto;
 import com.playko.projectManagement.application.handler.IEmailHandler;
 import com.playko.projectManagement.domain.model.TeamModel;
+import com.playko.projectManagement.domain.model.UserModel;
 import com.playko.projectManagement.domain.spi.ITeamPersistencePort;
 import com.playko.projectManagement.infrastructure.exception.EmptyTeamException;
 import com.playko.projectManagement.infrastructure.exception.TeamNotFoundException;
@@ -40,9 +41,45 @@ public class TeamJpaAdapter implements ITeamPersistencePort {
 
     @Override
     public void saveTeam(TeamModel teamModel) {
+// Convertimos los UserModel a UserEntity usando los correos
+        List<UserEntity> usuariosEnEquipo = new ArrayList<>();
+
+        for (UserModel userModel : teamModel.getUsers()) {
+            UserEntity userFromDb = userRepository.findByEmail(userModel.getEmail())
+                    .orElseThrow(UserNotFoundException::new);
+            usuariosEnEquipo.add(userFromDb);
+        }
+
+// Mapear el teamModel a TeamEntity
         TeamEntity teamEntity = teamEntityMapper.toEntity(teamModel);
-        teamRepository.save(teamEntity);
+
+// Asignar usuarios recuperados al teamEntity
+        teamEntity.setUsers(usuariosEnEquipo);
+
+// Guardar el equipo
+        teamEntity = teamRepository.save(teamEntity);
+
+// Agregar al owner (si no está)
+        String correo = securityUtils.obtenerCorreoDelToken();
+        UserEntity owner = userRepository.findByEmail(correo)
+                .orElseThrow(UserNotFoundException::new);
+
+        if (!usuariosEnEquipo.contains(owner)) {
+            usuariosEnEquipo.add(owner);
+            owner.setTeam(teamEntity);
+        }
+
+// Asignar el equipo a todos los usuarios
+        for (UserEntity user : usuariosEnEquipo) {
+            user.setTeam(teamEntity);
+        }
+
+// Guardar los usuarios
+        userRepository.saveAll(usuariosEnEquipo);
+
     }
+
+
 
     @Override
     public void addUserToTeam(Long teamId, String emailUser) {
