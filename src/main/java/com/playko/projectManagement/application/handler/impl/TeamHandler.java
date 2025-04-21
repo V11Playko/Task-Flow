@@ -17,9 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -31,17 +29,13 @@ public class TeamHandler implements ITeamHandler {
     private final IUserRepository userRepository;
     @Override
     public void saveTeam(TeamRequestDto teamRequestDto) {
-        // Mapeamos la información básica del equipo sin los usuarios
         TeamModel teamModel = teamRequestMapper.toTeamRequest(teamRequestDto);
 
-        // Obtenemos los usuarios desde el correo electrónico
         List<UserEntity> users = mapUsers(teamRequestDto.getUserEmails());
 
-        // Asignamos los usuarios al equipo
         List<UserModel> userModels = userEntityMapper.toUserModelList(users);
         teamModel.setUsers(userModels);
 
-        // Guardamos el equipo con los usuarios asignados
         teamServicePort.saveTeam(teamModel);
     }
 
