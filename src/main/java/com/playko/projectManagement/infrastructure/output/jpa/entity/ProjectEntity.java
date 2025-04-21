@@ -39,9 +39,9 @@ public class ProjectEntity {
 
     private String description;
 
-    private LocalDate CreationDate;
+    private LocalDate creationDate;
 
-    private LocalDate FinishedDate;
+    private LocalDate finishedDate;
 
     @Enumerated(EnumType.STRING)
     private ProjectState state;
