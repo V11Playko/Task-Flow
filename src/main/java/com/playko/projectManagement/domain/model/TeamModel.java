@@ -20,7 +20,7 @@ public class TeamModel {
         this.id = id;
         this.name = name;
         this.description = description;
-        CreationDate = creationDate;
+        this.creationDate = creationDate;
         this.state = state;
         this.users = users;
     }
@@ -50,11 +50,11 @@ public class TeamModel {
     }
 
     public LocalDate getCreationDate() {
-        return CreationDate;
+        return creationDate;
     }
 
     public void setCreationDate(LocalDate creationDate) {
-        CreationDate = creationDate;
+        this.creationDate = creationDate;
     }
 
     public TeamState getState() {
