@@ -32,7 +32,7 @@ public class TeamEntity {
 
     private String description;
 
-    private LocalDate CreationDate;
+    private LocalDate creationDate;
 
     @Enumerated(EnumType.STRING)
     private TeamState state;
