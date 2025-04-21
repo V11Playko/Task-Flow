@@ -11,7 +11,7 @@ public class TeamModel {
     private Long id;
     private String name;
     private String description;
-    private LocalDate CreationDate;
+    private LocalDate creationDate;
     @Enumerated(EnumType.STRING)
     private TeamState state;
     private List<UserModel> users;
