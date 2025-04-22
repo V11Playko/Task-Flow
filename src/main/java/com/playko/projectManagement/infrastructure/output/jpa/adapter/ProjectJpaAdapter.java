@@ -69,6 +69,7 @@ public class ProjectJpaAdapter implements IProjectPersistencePort {
 
         EmailRequestDto emailRequestDto = new EmailRequestDto();
         emailRequestDto.setDestinatario(project.getOwner());
+        emailRequestDto.setRemitente(correoAutenticado);
         emailRequestDto.setAsunto("Actualización de Proyecto");
         String message = String.format("El proyecto '%s' ha actualizado su fecha límite a %s.",
                 project.getName(), deadline);
@@ -93,6 +94,7 @@ public class ProjectJpaAdapter implements IProjectPersistencePort {
 
         EmailRequestDto emailRequestDto = new EmailRequestDto();
         emailRequestDto.setDestinatario(project.getOwner());
+        emailRequestDto.setRemitente(correoAutenticado);
         emailRequestDto.setAsunto("Proyecto Archivado");
         String message = String.format("El proyecto '%s' ha sido archivado.", project.getName());
         emailRequestDto.setMensaje(message);

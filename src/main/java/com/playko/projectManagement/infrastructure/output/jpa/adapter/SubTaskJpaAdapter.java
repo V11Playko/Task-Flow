@@ -71,6 +71,7 @@ public class SubTaskJpaAdapter implements ISubTaskPersistencePort {
         if (assignedUser != null) {
             EmailRequestDto emailRequestDto = new EmailRequestDto();
             emailRequestDto.setDestinatario(assignedUser.getEmail());
+            emailRequestDto.setRemitente(correoAutenticado);
             emailRequestDto.setAsunto("Actualización de Subtarea");
             String message = String.format("Tu subtarea '%s' ha sido actualizada.",
                     subTaskEntity.getTitle());

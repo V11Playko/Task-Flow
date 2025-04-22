@@ -112,6 +112,7 @@ public class TaskJpaAdapter implements ITaskPersistencePort {
 
         EmailRequestDto emailRequestDto = new EmailRequestDto();
         emailRequestDto.setDestinatario(userEntity.getEmail());
+        emailRequestDto.setRemitente(correoAutenticado);
         emailRequestDto.setAsunto(Exceptions.AFFAIR_NEW_TASK_ASSIGNMENT);
         String message = String.format(
                 "Hola %s,\n\nSe te ha asignado la tarea número %d. Para más información, comunícate con el manager de equipo.\n\nSaludos.",
@@ -140,6 +141,7 @@ public class TaskJpaAdapter implements ITaskPersistencePort {
 
         EmailRequestDto emailRequestDto = new EmailRequestDto();
         emailRequestDto.setDestinatario(task.getAssignedUser().getEmail());
+        emailRequestDto.setRemitente(correoAutenticado);
         emailRequestDto.setAsunto("Nueva Tarea Asignada");
         String message = String.format("Se te ha reasignado la tarea '%s'.", task.getTitle());
         emailRequestDto.setMensaje(message);
@@ -159,6 +161,7 @@ public class TaskJpaAdapter implements ITaskPersistencePort {
 
         EmailRequestDto emailRequestDto = new EmailRequestDto();
         emailRequestDto.setDestinatario(taskEntity.getAssignedUser().getEmail());
+        emailRequestDto.setRemitente(correoAutenticado);
         emailRequestDto.setAsunto("Actualización de Tarea");
         String message = String.format("Se te ha reasignado la tarea '%s'.", taskEntity.getTitle());
         emailRequestDto.setMensaje(message);
@@ -178,6 +181,7 @@ public class TaskJpaAdapter implements ITaskPersistencePort {
 
         EmailRequestDto emailRequestDto = new EmailRequestDto();
         emailRequestDto.setDestinatario(taskEntity.getAssignedUser().getEmail());
+        emailRequestDto.setRemitente(correoAutenticado);
         emailRequestDto.setAsunto("Cambio en Tarea");
         String message = String.format("Se te ha reasignado la tarea '%s'.", taskEntity.getTitle());
         emailRequestDto.setMensaje(message);
@@ -324,8 +328,10 @@ public class TaskJpaAdapter implements ITaskPersistencePort {
         tasks.stream()
                 .filter(task -> task.getAssignedUser() != null)
                 .forEach(task -> {
+                    String correo = task.getAssignedUser().getEmail();
                     EmailRequestDto emailRequestDto = new EmailRequestDto();
                     emailRequestDto.setDestinatario(task.getAssignedUser().getEmail());
+                    emailRequestDto.setRemitente(correo);
                     emailRequestDto.setAsunto("Recordatorio: Tarea próxima a vencer");
                     emailRequestDto.setMensaje("La tarea '" + task.getTitle() + "' vence el " + task.getLimitDate() + ".");
                     emailHandler.sendEmail(emailRequestDto);
