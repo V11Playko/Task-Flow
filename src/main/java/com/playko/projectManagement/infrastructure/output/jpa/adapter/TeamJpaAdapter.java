@@ -12,14 +12,17 @@ import com.playko.projectManagement.infrastructure.exception.TeamNotFoundExcepti
 import com.playko.projectManagement.infrastructure.exception.UserAlreadyInTeamException;
 import com.playko.projectManagement.infrastructure.exception.UserNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.UserNotInTeamException;
+import com.playko.projectManagement.infrastructure.output.jpa.entity.RoleEntity;
 import com.playko.projectManagement.infrastructure.output.jpa.entity.TaskEntity;
 import com.playko.projectManagement.infrastructure.output.jpa.entity.TeamEntity;
 import com.playko.projectManagement.infrastructure.output.jpa.entity.UserEntity;
 import com.playko.projectManagement.infrastructure.output.jpa.mapper.ITeamEntityMapper;
+import com.playko.projectManagement.infrastructure.output.jpa.repository.IRoleRepository;
 import com.playko.projectManagement.infrastructure.output.jpa.repository.ITaskRepository;
 import com.playko.projectManagement.infrastructure.output.jpa.repository.ITeamRepository;
 import com.playko.projectManagement.infrastructure.output.jpa.repository.IUserRepository;
 import com.playko.projectManagement.shared.SecurityUtils;
+import com.playko.projectManagement.shared.enums.RoleEnum;
 import com.playko.projectManagement.shared.enums.TaskState;
 import lombok.RequiredArgsConstructor;
 
@@ -38,10 +41,10 @@ public class TeamJpaAdapter implements ITeamPersistencePort {
     private final IEmailHandler emailHandler;
     private final ITaskRepository taskRepository;
     private final SecurityUtils securityUtils;
+    private final IRoleRepository roleRepository;
 
     @Override
     public void saveTeam(TeamModel teamModel) {
-// Convertimos los UserModel a UserEntity usando los correos
         List<UserEntity> usuariosEnEquipo = new ArrayList<>();
 
         for (UserModel userModel : teamModel.getUsers()) {
@@ -50,31 +53,28 @@ public class TeamJpaAdapter implements ITeamPersistencePort {
             usuariosEnEquipo.add(userFromDb);
         }
 
-// Mapear el teamModel a TeamEntity
         TeamEntity teamEntity = teamEntityMapper.toEntity(teamModel);
 
-// Asignar usuarios recuperados al teamEntity
         teamEntity.setUsers(usuariosEnEquipo);
 
-// Guardar el equipo
         teamEntity = teamRepository.save(teamEntity);
 
-// Agregar al owner (si no está)
         String correo = securityUtils.obtenerCorreoDelToken();
         UserEntity owner = userRepository.findByEmail(correo)
                 .orElseThrow(UserNotFoundException::new);
+
+        RoleEntity role = roleRepository.findByName(String.valueOf(RoleEnum.ROLE_MANAGER));
+        owner.setRoleEntity(role);
 
         if (!usuariosEnEquipo.contains(owner)) {
             usuariosEnEquipo.add(owner);
             owner.setTeam(teamEntity);
         }
 
-// Asignar el equipo a todos los usuarios
         for (UserEntity user : usuariosEnEquipo) {
             user.setTeam(teamEntity);
         }
 
-// Guardar los usuarios
         userRepository.saveAll(usuariosEnEquipo);
 
     }

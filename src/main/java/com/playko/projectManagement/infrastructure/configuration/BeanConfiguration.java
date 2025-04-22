@@ -111,8 +111,8 @@ public class BeanConfiguration {
 
     @Bean
     public ITeamPersistencePort teamPersistencePort(ITeamRepository teamRepository, ITeamEntityMapper teamEntityMapper, IUserRepository userRepository,
-                                                    EmailHandler emailHandler, ITaskRepository taskRepository, SecurityUtils securityUtils) {
-        return new TeamJpaAdapter(teamRepository, teamEntityMapper, userRepository, emailHandler, taskRepository, securityUtils);
+                                                    EmailHandler emailHandler, ITaskRepository taskRepository, SecurityUtils securityUtils, IRoleRepository roleRepository) {
+        return new TeamJpaAdapter(teamRepository, teamEntityMapper, userRepository, emailHandler, taskRepository, securityUtils, roleRepository);
     }
 
     @Bean
