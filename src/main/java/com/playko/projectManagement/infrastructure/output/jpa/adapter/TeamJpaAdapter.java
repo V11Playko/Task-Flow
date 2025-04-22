@@ -85,6 +85,7 @@ public class TeamJpaAdapter implements ITeamPersistencePort {
     public void addUserToTeam(Long teamId, String emailUser) {
         TeamEntity teamEntity = teamRepository.findById(teamId).orElseThrow(TeamNotFoundException::new);
         UserEntity userEntity = userRepository.findByEmail(emailUser).orElseThrow(UserNotFoundException::new);
+        String correoUsuario = securityUtils.obtenerCorreoDelToken();
 
         if (teamEntity.getUsers().contains(userEntity)) {
             throw new UserAlreadyInTeamException();
@@ -100,6 +101,7 @@ public class TeamJpaAdapter implements ITeamPersistencePort {
 
         EmailRequestDto emailRequestDto = new EmailRequestDto();
         emailRequestDto.setDestinatario(userEntity.getEmail());
+        emailRequestDto.setRemitente(correoUsuario);
         emailRequestDto.setAsunto("Has sido agregado al equipo " + teamEntity.getName());
         emailRequestDto.setMensaje("Hola " + userEntity.getName() + ",\n\n" +
                 "Has sido agregado al equipo '" + teamEntity.getName() + "'.\n" +

@@ -23,9 +23,10 @@ public class EmailJpaAdapter implements IEmailPersistencePort {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
+            helper.setFrom("heinnervega20@gmail.com"); // El correo autorizado por SMTP
+            helper.setReplyTo(email.getRemitente());   // El correo del usuario que realiza la acción
             helper.setTo(email.getDestinatario());
             helper.setSubject(email.getAsunto());
-            helper.setReplyTo(email.getRemitente());
 
             Context context = new Context();
             context.setVariable("message", email.getMensaje());
