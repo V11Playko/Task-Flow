@@ -121,7 +121,7 @@ public class TeamJpaAdapter implements ITeamPersistencePort {
         if (!teamEntity.getUsers().contains(userEntity)) {
             throw new UserNotInTeamException();
         }
-
+        userEntity.setTeam(null);
         teamEntity.getUsers().remove(userEntity);
         teamRepository.save(teamEntity);
     }
@@ -193,7 +193,7 @@ public class TeamJpaAdapter implements ITeamPersistencePort {
             EmailRequestDto individualEmail = new EmailRequestDto();
             individualEmail.setDestinatario(user.getEmail());
             individualEmail.setAsunto(emailRequest.getSubject());
-            individualEmail.setMensaje("Hola " + user.getName() + ",\n\n" + emailRequest.getMessage());
+            individualEmail.setMensaje("Hola " + user.getName() + "!!,\n\n" + emailRequest.getMessage());
             individualEmail.setRemitente(correo);
 
             emailHandler.sendEmail(individualEmail);
