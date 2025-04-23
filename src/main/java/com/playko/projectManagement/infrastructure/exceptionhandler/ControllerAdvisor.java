@@ -2,6 +2,7 @@ package com.playko.projectManagement.infrastructure.exceptionhandler;
 
 import com.playko.projectManagement.infrastructure.exception.BoardColumnNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.BoardNotFoundException;
+import com.playko.projectManagement.infrastructure.exception.DataNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.EmptyTeamException;
 import com.playko.projectManagement.infrastructure.exception.FileNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.InvalidBoardOperationException;
@@ -43,6 +44,7 @@ import java.util.Set;
 
 import static com.playko.projectManagement.shared.constants.Exceptions.BOARD_COLUMN_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.BOARD_NOT_FOUND_MESSAGE;
+import static com.playko.projectManagement.shared.constants.Exceptions.DATA_NOT_FOUND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.EMAIL_NOT_SEND_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.EMPTY_TEAM_MESSAGE;
 import static com.playko.projectManagement.shared.constants.Exceptions.FILE_NOT_FOUND_MESSAGE;
@@ -263,11 +265,16 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, INVALID_RESTRICTION_MESSAGE));
     }
-
     @ExceptionHandler(InvalidBoardOperationException.class)
     public ResponseEntity<Map<String, String>> invalidBoardOperationException(
             InvalidBoardOperationException invalidBoardOperationException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, INVALID_BOARD_OPERATION_MESSAGE));
+    }
+    @ExceptionHandler(DataNotFoundException.class)
+    public ResponseEntity<Map<String, String>> dataNotFoundException(
+            DataNotFoundException dataNotFoundException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Collections.singletonMap(RESPONSE_MESSAGE_KEY, DATA_NOT_FOUND_MESSAGE));
     }
 }
