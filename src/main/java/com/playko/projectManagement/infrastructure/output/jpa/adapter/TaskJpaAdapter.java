@@ -6,6 +6,7 @@ import com.playko.projectManagement.domain.model.TaskModel;
 import com.playko.projectManagement.domain.spi.ITaskPersistencePort;
 import com.playko.projectManagement.infrastructure.exception.BoardColumnNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.BoardNotFoundException;
+import com.playko.projectManagement.infrastructure.exception.DataNotFoundException;
 import com.playko.projectManagement.infrastructure.exception.InvalidKeywordException;
 import com.playko.projectManagement.infrastructure.exception.InvalidTaskStateException;
 import com.playko.projectManagement.infrastructure.exception.ProjectNotFoundException;
@@ -74,6 +75,10 @@ public class TaskJpaAdapter implements ITaskPersistencePort {
                     }
                 })
                 .toList();
+
+        if (tareasPermitidas.isEmpty()) {
+            throw new DataNotFoundException();
+        }
 
         return taskEntityMapper.toDtoList(tareasPermitidas);
     }

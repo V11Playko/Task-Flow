@@ -39,7 +39,7 @@ import java.util.List;
 public class TaskRestController {
     private final ITaskHandler taskHandler;
 
-    @PreAuthorize("hasAnyRole('CONTRIBUTOR', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'CONTRIBUIDOR', 'USER')")
     @GetMapping("/myTasks")
     public ResponseEntity<List<TaskResponseDto>> getTasksByUserEmail() {
         List<TaskResponseDto> tasks = taskHandler.getTasksByUserEmail();
