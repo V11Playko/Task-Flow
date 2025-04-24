@@ -1,6 +1,6 @@
 package com.playko.projectManagement.infrastructure.documentation;
 
-import com.playko.projectManagement.shared.constants.Exceptions;
+import com.playko.projectManagement.shared.constants.SwaggerConstants;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -22,11 +22,11 @@ public class OpenApiConfiguration {
                 .addProperty("error", new StringSchema().example("string"));
         return new OpenAPI()
                 .info(new Info()
-                        .title(Exceptions.SWAGGER_TITLE_MESSAGE)
-                        .description(Exceptions.SWAGGER_DESCRIPTION_MESSAGE)
-                        .version(Exceptions.SWAGGER_VERSION_MESSAGE)
-                        .license(new License().name(Exceptions.SWAGGER_LICENSE_NAME_MESSAGE).url(Exceptions.SWAGGER_LICENSE_URL_MESSAGE))
-                        .termsOfService(Exceptions.SWAGGER_TERMS_OF_SERVICE_MESSAGE))
+                        .title(SwaggerConstants.SWAGGER_TITLE_MESSAGE)
+                        .description(SwaggerConstants.SWAGGER_DESCRIPTION_MESSAGE)
+                        .version(SwaggerConstants.SWAGGER_VERSION_MESSAGE)
+                        .license(new License().name(SwaggerConstants.SWAGGER_LICENSE_NAME_MESSAGE).url(SwaggerConstants.SWAGGER_LICENSE_URL_MESSAGE))
+                        .termsOfService(SwaggerConstants.SWAGGER_TERMS_OF_SERVICE_MESSAGE))
                 .components(new Components()
                         .addSchemas("Map", mapSchema)
                         .addSchemas("Error", errorSchema));

@@ -25,7 +25,7 @@ import com.playko.projectManagement.infrastructure.output.jpa.repository.IProjec
 import com.playko.projectManagement.infrastructure.output.jpa.repository.ITaskRepository;
 import com.playko.projectManagement.infrastructure.output.jpa.repository.IUserRepository;
 import com.playko.projectManagement.shared.SecurityUtils;
-import com.playko.projectManagement.shared.constants.Exceptions;
+import com.playko.projectManagement.shared.constants.MailMessages;
 import com.playko.projectManagement.shared.enums.TaskPriority;
 import com.playko.projectManagement.shared.enums.TaskState;
 import lombok.RequiredArgsConstructor;
@@ -118,7 +118,7 @@ public class TaskJpaAdapter implements ITaskPersistencePort {
         EmailRequestDto emailRequestDto = new EmailRequestDto();
         emailRequestDto.setDestinatario(userEntity.getEmail());
         emailRequestDto.setRemitente(correoAutenticado);
-        emailRequestDto.setAsunto(Exceptions.AFFAIR_NEW_TASK_ASSIGNMENT);
+        emailRequestDto.setAsunto(MailMessages.AFFAIR_NEW_TASK_ASSIGNMENT);
         String message = String.format(
                 "Hola %s,\n\nSe te ha asignado la tarea número %d. Para más información, comunícate con el manager de equipo.\n\nSaludos.",
                 userEntity.getName(), taskId

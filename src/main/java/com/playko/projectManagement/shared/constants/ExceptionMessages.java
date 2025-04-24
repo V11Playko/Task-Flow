@@ -5,7 +5,7 @@ public class ExceptionMessages {
     private ExceptionMessages() {
         throw new IllegalStateException("Utility class");
     }
-
+    public static final String RESPONSE_MESSAGE_KEY = "Mensaje";
     public static final String UNAUTHORIZED_MESSAGE = "No tienes permiso para acceder a este recurso";
     public static final String USER_ALREADY_EXISTS_MESSAGE = "Este correo ya está en uso.";
     public static final String USER_NOT_FOUND_MESSAGE = "Usuario no encontrado.";
