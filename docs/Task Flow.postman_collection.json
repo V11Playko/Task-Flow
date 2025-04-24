@@ -73,6 +73,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -361,11 +371,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"teamId\": 0,\r\n  \"emailUser\": \"string\"\r\n}",
+							"raw": "{\r\n  \"teamId\": 18,\r\n  \"emailUser\": \"pele@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -391,10 +411,20 @@
 				{
 					"name": "Performance report",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/team/performance/{teamId}",
+							"raw": "{{base_url}}/api/v1/team/performance/18",
 							"host": [
 								"{{base_url}}"
 							],
@@ -403,7 +433,7 @@
 								"v1",
 								"team",
 								"performance",
-								"{teamId}"
+								"18"
 							]
 						}
 					},
@@ -412,11 +442,21 @@
 				{
 					"name": "Email to Team",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"subject\": \"string\",\r\n  \"message\": \"string\",\r\n  \"remitente\": \"string\"\r\n}\r\n",
+							"raw": "{\r\n  \"teamId\": 18,\r\n  \"subject\": \"Analisis de proyecto\",\r\n  \"message\": \"Mensaje de prueba\",\r\n  \"remitente\": \"pele@gmail.com\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -461,11 +501,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"owner\": \"string\"\n}",
+							"raw": "{\n  \"name\": \"Prueba\",\n  \"description\": \"melo\",\n  \"owner\": \"Kane@gmail.com\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -506,11 +556,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"projectId\": 0,\n  \"deadline\": \"2025-03-28\"\n}",
+							"raw": "{\n  \"projectId\": 1,\n  \"deadline\": \"2025-06-28\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -551,6 +611,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -563,7 +633,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/project/archive/{projectId}",
+							"raw": "{{base_url}}/api/v1/project/archive/1",
 							"host": [
 								"{{base_url}}"
 							],
@@ -572,7 +642,7 @@
 								"v1",
 								"project",
 								"archive",
-								"{projectId}"
+								"1"
 							]
 						},
 						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -596,10 +666,20 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/project/stats/{projectId}",
+							"raw": "{{base_url}}/api/v1/project/stats/1",
 							"host": [
 								"{{base_url}}"
 							],
@@ -608,7 +688,7 @@
 								"v1",
 								"project",
 								"stats",
-								"{projectId}"
+								"1"
 							]
 						},
 						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -633,11 +713,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"projectId\": 0,\n  \"email\": \"string\"\n}",
+							"raw": "{\n  \"projectId\": 1,\n  \"email\": \"emilio@gmail.com\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -678,11 +768,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"projectId\": 0,\r\n  \"email\": \"string\"\r\n}",
+							"raw": "{\r\n  \"projectId\": 1,\r\n  \"email\": \"emilio@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -690,7 +790,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/project/removeRestriction/{projectId}",
+							"raw": "{{base_url}}/api/v1/project/removeRestriction",
 							"host": [
 								"{{base_url}}"
 							],
@@ -698,8 +798,7 @@
 								"api",
 								"v1",
 								"project",
-								"removeRestriction",
-								"{projectId}"
+								"removeRestriction"
 							]
 						},
 						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
@@ -728,6 +827,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -764,11 +873,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"state\": \"PENDING\",\n  \"priority\": \"HIGH\",\n  \"limitDate\": \"2025-03-28\",\n  \"projectId\": 0,\n  \"boardColumnId\": 0,\n  \"assignedUserId\": 0\n}",
+							"raw": "{\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"state\": \"PENDING\",\n  \"priority\": \"HIGH\",\n  \"limitDate\": \"2025-03-28\",\n  \"projectId\": 0,\n  \"assignedUserId\": 0\n}",
 							"options": {
 								"raw": {
 									"language": "json"
