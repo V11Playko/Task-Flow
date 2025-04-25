@@ -60,7 +60,7 @@ public class BoardRestController {
             @ApiResponse(responseCode = "403", description = "User not authorized")
     })
     @PostMapping("/save")
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('MANAGER', 'USER', 'ADMIN')")
     public ResponseEntity<Void> saveBoard(@RequestBody BoardRequestDto boardRequestDto) {
         boardHandler.saveBoard(boardRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
