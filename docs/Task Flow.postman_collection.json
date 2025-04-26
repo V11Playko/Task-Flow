@@ -887,7 +887,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"state\": \"PENDING\",\n  \"priority\": \"HIGH\",\n  \"limitDate\": \"2025-03-28\",\n  \"projectId\": 0,\n  \"assignedUserId\": 0\n}",
+							"raw": "{\n  \"title\": \"Aja\",\n  \"description\": \"aja\",\n  \"state\": \"PENDING\",\n  \"priority\": \"HIGH\",\n  \"limitDate\": \"2025-07-28\",\n  \"projectId\": 1,\n  \"boardColumnId\": 2,\n  \"assignedUserId\": 7\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -928,11 +928,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"taskId\": 0,\n  \"userId\": 0\n}",
+							"raw": "{\n  \"taskId\": 1,\n  \"userId\": 7\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1018,11 +1028,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"taskId\": 0,\n  \"deadline\": \"2025-03-28\"\n}",
+							"raw": "{\n  \"taskId\": 1,\n  \"deadline\": \"2026-03-28\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1063,11 +1083,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"newState\": \"PENDING\"\n}",
+							"raw": "{\n  \"newState\": \"DONE\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1075,7 +1105,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/task/updateState/{taskId}",
+							"raw": "{{base_url}}/api/v1/task/updateState/1",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1084,7 +1114,7 @@
 								"v1",
 								"task",
 								"updateState",
-								"{taskId}"
+								"1"
 							]
 						},
 						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -1108,10 +1138,20 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/task/duration/{taskId}",
+							"raw": "{{base_url}}/api/v1/task/duration/1",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1120,7 +1160,7 @@
 								"v1",
 								"task",
 								"duration",
-								"{taskId}"
+								"1"
 							]
 						},
 						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -1145,6 +1185,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -1157,7 +1207,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/task/deleteTask/{id}",
+							"raw": "{{base_url}}/api/v1/task/deleteTask/2",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1166,7 +1216,7 @@
 								"v1",
 								"task",
 								"deleteTask",
-								"{id}"
+								"2"
 							]
 						},
 						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
@@ -1213,6 +1263,16 @@
 				{
 					"name": "Export calendar",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -1266,7 +1326,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/subtasks/add/{taskId}",
+							"raw": "{{base_url}}/api/v1/subtasks/add/1",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1275,7 +1335,7 @@
 								"v1",
 								"subtasks",
 								"add",
-								"{taskId}"
+								"1"
 							]
 						},
 						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
@@ -1517,10 +1577,20 @@
 				{
 					"name": "Get board by id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/board/{boardId}",
+							"raw": "{{base_url}}/api/v1/board/1",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1528,7 +1598,7 @@
 								"api",
 								"v1",
 								"board",
-								"{boardId}"
+								"1"
 							]
 						}
 					},
@@ -1567,11 +1637,21 @@
 				{
 					"name": "Board",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"string\",\r\n  \"projectId\": 0\r\n}",
+							"raw": "{\r\n  \"name\": \"Problemas\",\r\n  \"projectId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1601,10 +1681,29 @@
 				{
 					"name": "Add column to board",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": ENV[‘AUTH_TOKEN’],
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Pending\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/boardColumns/add/{boardId}",
+							"raw": "{{base_url}}/api/v1/boardColumns/add/1",
 							"host": [
 								"{{base_url}}"
 							],
@@ -1613,7 +1712,7 @@
 								"v1",
 								"boardColumns",
 								"add",
-								"{boardId}"
+								"1"
 							]
 						}
 					},
