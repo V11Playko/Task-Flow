@@ -103,7 +103,7 @@ public class TaskRestController {
             @ApiResponse(responseCode = "404", description = "Task not found"),
             @ApiResponse(responseCode = "403", description = "User not authorized")
     })
-    @PreAuthorize("hasAnyRole('CONTRIBUTOR', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('CONTRIBUTOR', 'ADMIN', 'MANAGER')")
     @PutMapping("/updateState/{taskId}")
     public ResponseEntity<Void> updateTaskState(@PathVariable Long taskId, @RequestBody TaskStateUpdateRequestDto request) {
         taskHandler.updateTaskState(taskId, request.getNewState());

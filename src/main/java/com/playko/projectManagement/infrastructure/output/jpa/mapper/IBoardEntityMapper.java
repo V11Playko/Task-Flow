@@ -1,6 +1,5 @@
 package com.playko.projectManagement.infrastructure.output.jpa.mapper;
 
-import com.playko.projectManagement.application.dto.response.BoardResponseDto;
 import com.playko.projectManagement.domain.model.BoardColumnModel;
 import com.playko.projectManagement.domain.model.BoardModel;
 import com.playko.projectManagement.domain.model.ProjectModel;
@@ -9,12 +8,9 @@ import com.playko.projectManagement.infrastructure.output.jpa.entity.BoardEntity
 import com.playko.projectManagement.infrastructure.output.jpa.entity.ProjectEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring",
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
@@ -24,7 +20,7 @@ public interface IBoardEntityMapper {
     BoardEntity toEntity(BoardModel boardModel);
 
     @Mapping(target = "name", source = "name")
-    @Mapping(target = "columns", source = "columns") // Asegúrate de tener el mapper para esto
+    @Mapping(target = "columns", source = "columns")
     @Mapping(target = "project", source = "project")
     BoardModel toResponse(BoardEntity board);
 
