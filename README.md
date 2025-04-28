@@ -13,24 +13,34 @@ El sistema permite a usuarios y equipos gestionar proyectos, tareas y colaboraci
 - Recuperación de contraseñas.
 - Edición de perfiles de usuario.
 - Invitación y desactivación de usuarios.
+- Gestión de usuarios restringidos por proyecto.
 
 ### Gestión de Proyectos
 - Creación y configuración de proyectos.
 - Asignación de roles y permisos.
 - Archivado de proyectos completados.
+- Restricción de acceso a proyectos mediante listas de usuarios.
 
 ### Gestión de Tareas
 - Asignación y seguimiento de tareas.
 - Creación de subtareas.
 - Notificaciones de nuevas tareas y recordatorios.
+- Registro de historial de modificaciones de tareas.
 
 ### Visualización y Organización
 - Tableros Kanban personalizables.
 - Estadísticas básicas y reportes de rendimiento.
+- Filtros de tareas por estado, responsable o prioridad.
 
 ### Integraciones
 - Sincronización con calendarios externos (Google Calendar).
 - Registro de tiempo empleado en tareas.
+- Exportación de tareas y proyectos a formatos CSV o PDF.
+
+### Seguridad y Control de Acceso
+- Autenticación basada en roles.
+- Control de acceso a recursos y entidades sensibles.
+- Gestión de equipos de trabajo asignados a proyectos.
 
 ## Tecnologías utilizadas
 
@@ -111,8 +121,8 @@ projectManagement/
    ```
 
 5. Acceder a la documentación de las APIs:
-    - Swagger: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
-    - GraphQL Playground: [http://localhost:8080/graphql](http://localhost:8080/graphql)
+    - Swagger: [http://localhost:8090/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+    - GraphQL Playground: [http://localhost:8090/graphql](http://localhost:8080/graphql)
 
 ## Contribuir
 
